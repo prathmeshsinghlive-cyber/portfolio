@@ -1,0 +1,211 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Outfit:wght@200;300;400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+:root {
+  --background: #F7F7F7;
+  --foreground: #050505;
+  --card-bg: rgba(255, 255, 255, 0.7);
+  --card-border: rgba(255, 255, 255, 0.4);
+  
+  --gold: #D4AF37;
+  --purple: #8A2BE2;
+  --blue: #0070f3;
+  --pink: #FF69B4;
+  --neon-glow: rgba(138, 43, 226, 0.3);
+  
+  --font-serif: 'Cormorant Garamond', serif;
+  --font-sans: 'Outfit', sans-serif;
+}
+
+.dark {
+  --background: #050505;
+  --foreground: #F7F7F7;
+  --card-bg: rgba(10, 10, 10, 0.7);
+  --card-border: rgba(255, 255, 255, 0.08);
+  --neon-glow: rgba(212, 175, 55, 0.15);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-gold: var(--gold);
+  --color-purple: var(--purple);
+  --color-blue: var(--blue);
+  --color-pink: var(--pink);
+  
+  --font-serif: var(--font-serif);
+  --font-sans: var(--font-sans);
+}
+
+/* Custom CSS Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--card-border);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--purple);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+/* Custom Premium Utilities */
+.font-serif-lux {
+  font-family: var(--font-serif);
+}
+
+/* Glassmorphism Styles */
+.glass {
+  background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--card-border);
+}
+
+.glass-premium {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+}
+
+.dark .glass-premium {
+  background: linear-gradient(135deg, rgba(5, 5, 5, 0.8) 0%, rgba(15, 15, 15, 0.6) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Grain Overlay Effect */
+.grain-overlay {
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  right: -50%;
+  bottom: -50%;
+  width: 200%;
+  height: 200%;
+  background: transparent url('data:image/svg+xml,%3Csvg viewBox="0%200%20200%20200"%20xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter%20id="noiseFilter"%3E%3CfeTurbulence%20type="fractalNoise"%20baseFrequency="0.65"%20numOctaves="3"%20stitchTiles="stitch"/%3E%3C/filter%3E%3Crect%20width="100%25"%20height="100%25"%20filter="url(%23noiseFilter)"%20opacity="0.04"/%3E%3C/svg%3E') repeat;
+  opacity: 0.8;
+  pointer-events: none;
+  z-index: 9999;
+  animation: grain-animation 8s steps(10) infinite;
+}
+
+@keyframes grain-animation {
+  0%, 100% { transform:translate(0, 0); }
+  10% { transform:translate(-5%, -10%); }
+  20% { transform:translate(-15%, 5%); }
+  30% { transform:translate(7%, -25%); }
+  40% { transform:translate(-5%, 25%); }
+  50% { transform:translate(-15%, 10%); }
+  60% { transform:translate(15%, 0%); }
+  70% { transform:translate(0%, 15%); }
+  80% { transform:translate(3%, 35%); }
+  90% { transform:translate(-10%, 10%); }
+}
+
+/* Animated Mesh Gradient Background */
+.mesh-gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -10;
+  background-color: var(--background);
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(138, 43, 226, 0.15) 0px, transparent 50%),
+    radial-gradient(at 50% 0%, rgba(212, 175, 55, 0.12) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(0, 112, 243, 0.15) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(255, 105, 180, 0.1) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(138, 43, 226, 0.15) 0px, transparent 50%);
+  background-size: 200% 200%;
+  animation: mesh-movement 20s ease infinite;
+}
+
+@keyframes mesh-movement {
+  0% { background-position: 0% 50% }
+  50% { background-position: 100% 50% }
+  100% { background-position: 0% 50% }
+}
+
+/* Custom Text Reveal styles */
+.text-mask-reveal {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+}
+
+/* Animated Spotlight Hover Tracker */
+.spotlight {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1;
+  background: radial-gradient(circle 350px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(212, 175, 55, 0.05), transparent 80%);
+}
+
+.dark .spotlight {
+  background: radial-gradient(circle 450px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(138, 43, 226, 0.08), transparent 80%);
+}
+
+/* 3D Vinyl Shine Reflection Effect */
+.vinyl-reflection {
+  background: radial-gradient(circle at center, transparent 30%, rgba(255, 255, 255, 0.1) 40%, transparent 45%, rgba(255, 255, 255, 0.05) 50%, transparent 60%);
+  transform: rotate(35deg);
+}
+
+/* Luminous Plaque reflection */
+.award-shine {
+  background: linear-gradient(105deg, transparent 40%, rgba(212, 175, 55, 0.3) 50%, transparent 60%);
+  background-size: 200% 100%;
+  animation: shimmer 5s infinite linear;
+}
+
+@keyframes shimmer {
+  0% { background-position: 150% 0; }
+  100% { background-position: -50% 0; }
+}
+
+/* Hide default cursor on devices that support hover */
+@media (hover: hover) and (pointer: fine) {
+  body {
+    cursor: none;
+  }
+  a, button, [role="button"], input, select, textarea {
+    cursor: none;
+  }
+}
+
+/* Stage Lights and Lasers */
+.stage-laser {
+  position: absolute;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(138, 43, 226, 0.8), transparent);
+  transform-origin: top center;
+  mix-blend-mode: screen;
+}
+
+.stage-laser-blue {
+  background: linear-gradient(to bottom, rgba(0, 112, 243, 0.8), transparent);
+}
+
+.stage-laser-gold {
+  background: linear-gradient(to bottom, rgba(212, 175, 55, 0.8), transparent);
+}
