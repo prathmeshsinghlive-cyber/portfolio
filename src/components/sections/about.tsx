@@ -70,7 +70,7 @@ export default function About() {
   return (
     <section 
       id="about" 
-      className="relative min-h-screen w-full py-24 bg-background overflow-hidden px-6 md:px-16 border-t border-white/5"
+      className="relative w-full pt-24 pb-12 bg-background overflow-hidden px-6 md:px-16 border-t border-white/5"
     >
       {/* Background lyrics overlay */}
       <div className="absolute inset-0 z-0 pointer-events-none select-none opacity-5 font-serif-lux italic text-5xl md:text-8xl text-foreground flex flex-col justify-around overflow-hidden pl-10">
@@ -190,7 +190,7 @@ export default function About() {
         {/* Streaming / Experience Statistics Counter grid */}
         <div 
           ref={statsRef}
-          className="grid grid-cols-2 md:grid-cols-5 gap-6 border-y border-white/5 py-12 mb-24 text-center"
+          className="grid grid-cols-2 md:grid-cols-5 gap-6 border-y border-white/5 py-12 mb-6 text-center"
         >
           {STATS.map((stat, i) => (
             <div key={i} className="flex flex-col items-center">

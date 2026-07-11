@@ -5,7 +5,7 @@ import { useAudio } from "@/components/providers/audio-context";
 import { motion } from "framer-motion";
 import VinylPlayer from "@/components/ui/vinyl-player";
 import AudioVisualizer from "@/components/ui/audio-visualizer";
-import { Play, Pause, SkipForward, SkipBack, Calendar, Music } from "lucide-react";
+import { Play, Pause, SkipForward, SkipBack, Music } from "lucide-react";
 
 export default function Hero() {
   const { isPlaying, togglePlay, nextTrack, prevTrack, tracks, currentTrackIndex } = useAudio();
@@ -208,15 +208,6 @@ export default function Hero() {
             >
               {isPlaying ? <Pause className="w-4 h-4 fill-current" /> : <Play className="w-4 h-4 fill-current ml-0.5" />}
               <span>{isPlaying ? "PAUSE AUDIO" : "LISTEN NOW"}</span>
-            </button>
-
-            <button
-              onClick={() => handleScrollToSection("booking")}
-              className="px-8 py-3.5 rounded-full border border-foreground/20 hover:border-gold text-foreground hover:text-gold bg-transparent transition-all duration-300 font-semibold text-xs uppercase tracking-widest cursor-pointer flex items-center gap-2.5"
-              data-cursor="magnetic"
-            >
-              <Calendar className="w-4 h-4" />
-              <span>BOOK LIVE SHOW</span>
             </button>
           </motion.div>
         </div>

@@ -14,7 +14,7 @@ const NAV_LINKS = [
   { id: "hero", label: "Home" },
   { id: "about", label: "Story" },
   { id: "discography", label: "Music" },
-  { id: "live", label: "Shows" },
+  { id: "live", label: "Upcoming" },
   { id: "gallery", label: "Visuals" },
   { id: "contact", label: "Contact" },
 ];
