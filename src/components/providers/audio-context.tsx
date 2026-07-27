@@ -25,61 +25,6 @@ export const PLAYLIST: Track[] = [
     description: "Deep soul melodies blended with warm indie arrangements.",
     audioUrl: "/SongsMp3/1. Ramz.wav",
     coverUrl: "/SongsPoster/1. Ramz.png"
-  },
-  {
-    id: "track-2",
-    title: "Khwabon Me Tujhe",
-    album: "Originals",
-    genre: "Romantic Pop",
-    duration: "4:30",
-    color: "#FF69B4",
-    description: "A dreamy romantic soundscape depicting the warm spaces of night dreams.",
-    audioUrl: "/SongsMp3/2. Khwabon Me Tujhe.wav",
-    coverUrl: "/SongsPoster/2. Khwabon Me Tujhe.png"
-  },
-  {
-    id: "track-3",
-    title: "Bas Kar Ye Teri Baatein",
-    album: "Originals",
-    genre: "Cyber Synth",
-    duration: "4:22",
-    color: "#D4AF37",
-    description: "Rhythmic beats driving through emotional conversations.",
-    audioUrl: "/SongsMp3/3. Bas Kar Ye Teri Baatein.wav",
-    coverUrl: "/SongsPoster/3. Bas Kar Ye Teri Baatein.png"
-  },
-  {
-    id: "track-4",
-    title: "Tera Asar Reprise",
-    album: "Originals",
-    genre: "Acoustic Plucks",
-    duration: "3:26",
-    color: "#0070f3",
-    description: "A gentle acoustic reprise reflecting on memory and warmth.",
-    audioUrl: "/SongsMp3/4. Tera Asar Reprise.wav",
-    coverUrl: "/SongsPoster/4. Tera Asar Reprise.png"
-  },
-  {
-    id: "track-5",
-    title: "Maa Forever",
-    album: "Originals",
-    genre: "Orchestral Soul",
-    duration: "3:19",
-    color: "#FF4500",
-    description: "An emotional orchestral tribute filled with raw vocal resonance.",
-    audioUrl: "/SongsMp3/5. Maa Forever.wav",
-    coverUrl: "/SongsPoster/5. Maa Forever.png"
-  },
-  {
-    id: "track-6",
-    title: "Tera Asar",
-    album: "Originals",
-    genre: "Pop Soul",
-    duration: "4:04",
-    color: "#32CD32",
-    description: "The original full-production soul track capturing the essence of presence.",
-    audioUrl: "/SongsMp3/6. Tera Asar.wav",
-    coverUrl: "/SongsPoster/6. Tera Asar.jpg"
   }
 ];
 

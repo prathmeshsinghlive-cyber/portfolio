@@ -85,7 +85,7 @@ export default function Navbar({ currentSection }: NavbarProps) {
         {/* Brand Logo */}
         <div 
           onClick={() => handleLinkClick("hero")}
-          className="text-xl md:text-2xl font-light font-serif-lux tracking-[0.2em] text-foreground cursor-pointer flex items-center gap-1.5 select-none shrink-0"
+          className="text-xl md:text-2xl font-brittany text-foreground cursor-pointer flex items-center gap-1.5 select-none shrink-0 hover:text-gold transition-colors duration-300"
           data-cursor="magnetic"
         >
           <span>Prathmesh Singh</span>
@@ -178,7 +178,7 @@ export default function Navbar({ currentSection }: NavbarProps) {
           >
             {/* Header */}
             <div className="flex justify-between items-center">
-              <span className="text-lg font-light tracking-[0.2em] text-foreground">Prathmesh Singh</span>
+              <span className="text-xl font-brittany text-foreground">Prathmesh Singh</span>
               <button 
                 onClick={() => setMobileMenuOpen(false)}
                 className="text-foreground p-2"

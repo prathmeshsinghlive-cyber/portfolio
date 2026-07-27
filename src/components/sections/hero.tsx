@@ -5,10 +5,10 @@ import { useAudio } from "@/components/providers/audio-context";
 import { motion } from "framer-motion";
 import VinylPlayer from "@/components/ui/vinyl-player";
 import AudioVisualizer from "@/components/ui/audio-visualizer";
-import { Play, Pause, SkipForward, SkipBack, Music } from "lucide-react";
+import { Play, Pause, Music } from "lucide-react";
 
 export default function Hero() {
-  const { isPlaying, togglePlay, nextTrack, prevTrack, tracks, currentTrackIndex } = useAudio();
+  const { isPlaying, togglePlay, tracks, currentTrackIndex } = useAudio();
   const particleCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const activeTrack = tracks[currentTrackIndex];
 
@@ -287,34 +287,16 @@ export default function Hero() {
               <AudioVisualizer type="bars" color={activeTrack.color} barWidth={2} gap={1} multiplier={0.8} />
             </div>
 
-            {/* Control Button panel - Always in frame */}
-            <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
-              <button 
-                onClick={prevTrack} 
-                className="p-1.5 rounded-lg text-white/50 hover:text-white hover:bg-white/5 transition-colors"
-                title="Previous"
-                data-cursor="magnetic"
-              >
-                <SkipBack className="w-3.5 h-3.5" />
-              </button>
-              
+            {/* Control Button panel - Only Play/Pause toggle */}
+            <div className="flex items-center shrink-0">
               <button 
                 onClick={togglePlay} 
-                className="p-2 rounded-full text-black hover:scale-105 active:scale-95 transition-all shadow-md shrink-0"
+                className="p-2.5 rounded-full text-black hover:scale-105 active:scale-95 transition-all shadow-md shrink-0 cursor-pointer"
                 style={{ backgroundColor: activeTrack.color }}
                 title={isPlaying ? "Pause" : "Play"}
                 data-cursor="magnetic"
               >
-                {isPlaying ? <Pause className="w-3 h-3 fill-current" /> : <Play className="w-3 h-3 fill-current ml-0.5" />}
-              </button>
-
-              <button 
-                onClick={nextTrack} 
-                className="p-1.5 rounded-lg text-white/50 hover:text-white hover:bg-white/5 transition-colors"
-                title="Next"
-                data-cursor="magnetic"
-              >
-                <SkipForward className="w-3.5 h-3.5" />
+                {isPlaying ? <Pause className="w-3.5 h-3.5 fill-current" /> : <Play className="w-3.5 h-3.5 fill-current ml-0.5" />}
               </button>
             </div>
           </motion.div>

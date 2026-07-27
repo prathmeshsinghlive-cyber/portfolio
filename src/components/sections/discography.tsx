@@ -23,7 +23,7 @@ const SONGS: Song[] = [
   {
     id: "ramz",
     title: "Ramz",
-    releaseYear: "2025",
+    releaseYear: "2026",
     poster: "/SongsPoster/1. Ramz.png",
     accent: "#8A2BE2",
     description: "Ramz — Agar aap kisiko bohot pasand karte ho and bolne me darr lagta hai, to ye gaana bhejke confess kardo mere dost…………",
@@ -35,7 +35,7 @@ const SONGS: Song[] = [
   {
     id: "khwabo",
     title: "Khwabon Me Tujhe",
-    releaseYear: "2024",
+    releaseYear: "2026",
     poster: "/SongsPoster/2. Khwabon Me Tujhe.png",
     accent: "#D4AF37",
     description: "Khwabon Me Tujhe — Kabhi aisa hua hai ki koi insaan apki zindagi me aaya and aapki zindagi achanak se bohot khoobsurat banake ek din hamesha ke liye aapse door chala gaya, to us insaan ke jaane ke baad kaise feel hota hai, ye gaana us baare me hai…",
@@ -47,7 +47,7 @@ const SONGS: Song[] = [
   {
     id: "bas-kar",
     title: "Bas Kar Ye Teri Baatein",
-    releaseYear: "2024",
+    releaseYear: "2025",
     poster: "/SongsPoster/3. Bas Kar Ye Teri Baatein.png",
     accent: "#FF69B4",
     description: "Bas Kar Ye Teri Baatein — Kabhi pyaar aur sapno ke beech me choice karni padi hai? Sapno ke peeche bhaagne ke liye pyaar ko jaane diya hai kabhi? Agar aisa hua hai and wo insaan tumse door hai kyunki tum apne sapno ke pass ho, to ye sunlo…",
@@ -59,7 +59,7 @@ const SONGS: Song[] = [
   {
     id: "tera-asar-reprise",
     title: "Tera Asar Reprise",
-    releaseYear: "2024",
+    releaseYear: "2025",
     poster: "/SongsPoster/4. Tera Asar Reprise.png",
     accent: "#00CED1",
     description: "Tera Asar Reprise — If you liked Tera Asar, you will love this too, aur agar Tera Asar nhi suna fir to seedhe yhi sunlo, kabhi kisi ko dekhke kuch kuch feel hua hai to ye tumhare liye hai…",
@@ -71,7 +71,7 @@ const SONGS: Song[] = [
   {
     id: "maa-forever",
     title: "Maa Forever",
-    releaseYear: "2024",
+    releaseYear: "2025",
     poster: "/SongsPoster/5. Maa Forever.png",
     accent: "#FFD700",
     description: "Maa Forever — Apni mummy se bohot pyaar karte ho but batane me awkwardness ho jaati hai, to ye sunado unhe……",
@@ -83,7 +83,7 @@ const SONGS: Song[] = [
   {
     id: "tera-asar",
     title: "Tera Asar",
-    releaseYear: "2024",
+    releaseYear: "2025",
     poster: "/SongsPoster/6. Tera Asar.jpg",
     accent: "#FF4500",
     description: "Tera Asar — A song for all age groups, whether you like someone, you are dating someone or you have married someone, agar aaj bhi us insaan ko dekhke ya uske baare me sochke butterflies in the stomach wali feeling aati hai, to ye tumhare liye hai……",

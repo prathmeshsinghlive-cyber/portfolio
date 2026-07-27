@@ -178,6 +178,18 @@ export default function About() {
                     ),
                   },
                   {
+                    name: "YouTube Music",
+                    href: "https://music.youtube.com/@prathmeshsinghmusic",
+                    color: "#FF0000",
+                    glow: "rgba(255,0,0,0.35)",
+                    delay: 0.70,
+                    icon: (
+                      <svg viewBox="0 0 24 24" className="w-5 h-5" fill="currentColor">
+                        <path d="M12 0C5.376 0 0 5.376 0 12s5.376 12 12 12 12-5.376 12-12S18.624 0 12 0zm0 19.2c-3.978 0-7.2-3.222-7.2-7.2s3.222-7.2 7.2-7.2 7.2 3.222 7.2 7.2-3.222 7.2-7.2 7.2zm0-11.4c-2.316 0-4.2 1.884-4.2 4.2s1.884 4.2 4.2 4.2 4.2-1.884 4.2-4.2-1.884-4.2-4.2-4.2zm-2.4 6.3V9.9l4.5 2.1-4.5 2.1z"/>
+                      </svg>
+                    ),
+                  },
+                  {
                     name: "Spotify",
                     href: "https://open.spotify.com/artist/5d75hQdlksXwkeHbfXYySO",
                     color: "#1DB954",
@@ -215,7 +227,7 @@ export default function About() {
                   },
                   {
                     name: "Facebook",
-                    href: "https://www.facebook.com/prathmeshsinghmusic",
+                    href: "https://www.facebook.com/profile.php?id=100005087924994",
                     color: "#1877F2",
                     glow: "rgba(24,119,242,0.35)",
                     delay: 1.05,

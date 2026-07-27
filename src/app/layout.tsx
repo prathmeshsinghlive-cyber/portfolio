@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Prathmesh Singh | Immersive Concert Experience",
+  title: "Prathmesh Singh | Live",
   description: "Explore the digital concert world of Prathmesh Singh. Procedural ambient synths, 3D vinyl selectors, and award-winning musical storytelling.",
   icons: {
     icon: "/logo.png",

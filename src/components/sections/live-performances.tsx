@@ -6,9 +6,9 @@ import { Clock } from "lucide-react";
 export default function LivePerformances() {
   const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
-  // Countdown timer logic targeting November 19, 2026
+  // Countdown timer logic targeting September 20, 2026 (55 days countdown)
   useEffect(() => {
-    const targetDate = new Date("November 19, 2026 00:00:00").getTime();
+    const targetDate = new Date("September 20, 2026 20:00:00").getTime();
 
     const updateTimer = () => {
       const now = new Date().getTime();
@@ -52,7 +52,7 @@ export default function LivePerformances() {
             <img 
               src="/Upcoming/IMG_5290.PNG" 
               alt="Pyari Si Tu Poster" 
-              className="absolute inset-0 w-full h-full object-cover object-center opacity-60 md:opacity-70 transition-opacity duration-700"
+              className="absolute inset-0 w-full h-full object-cover object-[75%_center] opacity-60 md:opacity-75 transition-opacity duration-700"
             />
             {/* Balanced dark gradient vignettes to keep text and countdown timer 100% crisp */}
             <div className="absolute inset-0 bg-gradient-to-r from-zinc-950/90 via-zinc-950/50 to-zinc-950/80" />
@@ -63,12 +63,12 @@ export default function LivePerformances() {
           <div className="relative z-10 flex flex-col text-left max-w-full lg:max-w-xl">
             <div className="flex items-center gap-2 mb-3">
               <span className="px-3.5 py-1 rounded-full bg-gold/10 border border-gold/30 text-gold text-[10px] font-mono font-bold tracking-[0.25em] uppercase">
-                NEW SINGLE RELEASE
+                UPCOMING
               </span>
             </div>
             
             <h3 className="text-2xl md:text-5xl font-light font-serif-lux text-white italic leading-tight">
-              Prathmesh Singh: <br />
+              Prathmesh Singh Originals: <br />
               <span className="text-gold not-italic font-black uppercase tracking-wider text-3xl md:text-5xl block mt-1 drop-shadow-md">
                 Pyari Si Tu
               </span>
@@ -102,7 +102,7 @@ export default function LivePerformances() {
             <div className="flex items-center gap-2 mb-3">
               <Clock className="w-3.5 h-3.5 text-gold" />
               <span className="text-[10px] tracking-[0.25em] text-white/70 uppercase font-mono font-semibold">
-                COUNTDOWN TO 19 NOVEMBER 2026
+                COUNTDOWN TO 20 SEPTEMBER 2026
               </span>
             </div>
 

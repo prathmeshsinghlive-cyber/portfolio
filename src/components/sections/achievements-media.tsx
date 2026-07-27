@@ -347,15 +347,7 @@ export default function AchievementsMedia() {
                 </div>
               </div>
 
-              {/* Bottom Label Bar */}
-              <div className="absolute bottom-3 left-3 right-3 flex justify-between items-end pointer-events-none">
-                <span className="text-xs font-bold text-white tracking-wide uppercase drop-shadow-md">
-                  {photo.label}
-                </span>
-                <span className="text-[9px] font-mono text-gold/70 uppercase">
-                  Prathmesh Singh
-                </span>
-              </div>
+
             </motion.div>
           ))}
         </div>

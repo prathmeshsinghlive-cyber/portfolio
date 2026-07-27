@@ -422,13 +422,7 @@ export default function PhotoExperience() {
                 {/* Dark gradient overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-black/10 pointer-events-none" />
 
-                {/* Big watermark step number in background */}
-                <div
-                  className="absolute right-4 bottom-12 text-[7rem] font-black leading-none select-none pointer-events-none opacity-[0.06] group-hover:opacity-[0.10] transition-opacity duration-500 font-mono"
-                  style={{ color: section.accent }}
-                >
-                  {section.stepNum}
-                </div>
+
 
                 {/* Colored radial glow — more vivid on hover */}
                 <motion.div
