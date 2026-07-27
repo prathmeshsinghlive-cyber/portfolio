@@ -43,7 +43,7 @@ const SAFAR_DATA: SafarSection[] = [
       "With Mukund Ramaswamy.JPG","With Osho Jain.JPG","With Piyush Bhisekar.JPG",
       "With Raghav Somani.JPG","With Raj Shekhar.JPG","With Raman Negi.JPG",
       "With Shloka.JPG","With Siddharth & Garima.JPG","With Taba Chake.JPG","With Tarsame Mittal.JPG",
-    ].map(f => ({ src: `/SAFAR/1. With Industry People/${encodeURIComponent(f)}`, caption: captionFromFilename(f) })),
+    ].map(f => ({ src: encodeURI(`/SAFAR/1. With Industry People/${f}`), caption: captionFromFilename(f) })),
   },
   {
     id: "festivals",
@@ -54,7 +54,7 @@ const SAFAR_DATA: SafarSection[] = [
       "All About Music 1 - Mumbai 2025.JPG","All About Music 2.JPG","All About Music 3.JPG",
       "Havells mYOUsic 1 - Noida 2026.JPG","Havells mYOUsic 2.JPG",
       "Vedanta Udaipur World Music Festival 1 - Udaipur 2026.JPG","Vedanta Udaipur World Music Festival 2.JPG",
-    ].map(f => ({ src: `/SAFAR/2. Me at Music Festivals, Events & Conferences/${encodeURIComponent(f)}`, caption: captionFromFilename(f) })),
+    ].map(f => ({ src: encodeURI(`/SAFAR/2. Me at Music Festivals, Events & Conferences/${f}`), caption: captionFromFilename(f) })),
   },
   {
     id: "sponsorships",
@@ -67,7 +67,7 @@ const SAFAR_DATA: SafarSection[] = [
       "3 - Enya Travel Guitar by Amazon Prime Team.JPG",
       "4.JPG","5 - Dynamic Mic Sponsorship from SHURE.JPG","6.JPG",
       "7 - Studio Monitors Sponsorship from Hayden Audio.JPG","8.JPG","9.JPG","10.jpg",
-    ].map(f => ({ src: `/SAFAR/3. Sponsorships & Support from Brands/${encodeURIComponent(f)}`, caption: captionFromFilename(f) })),
+    ].map(f => ({ src: encodeURI(`/SAFAR/3. Sponsorships & Support from Brands/${f}`), caption: captionFromFilename(f) })),
   },
   {
     id: "rising-star",
@@ -76,7 +76,7 @@ const SAFAR_DATA: SafarSection[] = [
     accent: "#FFD700",
     images: [
       "Rising Star 1.jpg","Rising Star 2.jpg","Rising Star 3.jpg",
-    ].map(f => ({ src: `/SAFAR/4. Rising Star Award by Melo Works 2025/${encodeURIComponent(f)}`, caption: captionFromFilename(f) })),
+    ].map(f => ({ src: encodeURI(`/SAFAR/4. Rising Star Award by Melo Works 2025/${f}`), caption: captionFromFilename(f) })),
   },
   {
     id: "competitions",
@@ -85,7 +85,7 @@ const SAFAR_DATA: SafarSection[] = [
     accent: "#00CED1",
     images: [
       "IMG-20250420-WA0029.jpg","IMG20250216173903.jpg","IMG_20250420_163502.jpg","IMG_4409.JPG",
-    ].map(f => ({ src: `/SAFAR/5. Wins at Music Competitions/${encodeURIComponent(f)}`, caption: captionFromFilename(f) })),
+    ].map(f => ({ src: encodeURI(`/SAFAR/5. Wins at Music Competitions/${f}`), caption: captionFromFilename(f) })),
   },
   {
     id: "sennheiser",
@@ -94,7 +94,7 @@ const SAFAR_DATA: SafarSection[] = [
     accent: "#FF4500",
     images: [
       "Sennheiser 1.jpg","Sennheiser 2.JPG",
-    ].map(f => ({ src: `/SAFAR/6. Sennheiser Sound That Shaped Me Contest Winner 2025/${encodeURIComponent(f)}`, caption: captionFromFilename(f) })),
+    ].map(f => ({ src: encodeURI(`/SAFAR/6. Sennheiser Sound That Shaped Me Contest Winner 2025/${f}`), caption: captionFromFilename(f) })),
   },
   {
     id: "bts",
@@ -112,7 +112,7 @@ const SAFAR_DATA: SafarSection[] = [
     ].map(f => {
       const cap = captionFromFilename(f);
       return {
-        src: `/SAFAR/7. Behind the Scenes/${encodeURIComponent(f)}`,
+        src: encodeURI(`/SAFAR/7. Behind the Scenes/${f}`),
         caption: cap === "🙂" ? "What happens when I am not performing" : cap
       };
     }),

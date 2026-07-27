@@ -1,10 +1,10 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useState, useRef } from "react";
 import { useAudio } from "@/components/providers/audio-context";
 import { useLenis } from "lenis/react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Moon, Sun, Volume2, VolumeX, Menu, X } from "lucide-react";
+import { Volume2, VolumeX, Menu, X } from "lucide-react";
 
 interface NavbarProps {
   currentSection: string;
@@ -25,7 +25,6 @@ export default function Navbar({ currentSection }: NavbarProps) {
   const { isPlaying, togglePlay, isMuted, toggleMute } = useAudio();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
-  const [isThemeDark, setIsThemeDark] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const isNavigatingRef = useRef(false);
 
@@ -53,18 +52,6 @@ export default function Navbar({ currentSection }: NavbarProps) {
       setIsVisible(true);
     }
   });
-
-  // 2. Light / Dark mode toggle
-  const toggleTheme = () => {
-    const root = document.documentElement;
-    if (isThemeDark) {
-      root.classList.remove("dark");
-      setIsThemeDark(false);
-    } else {
-      root.classList.add("dark");
-      setIsThemeDark(true);
-    }
-  };
 
   // Synchronize default dark mode on mount
   useEffect(() => {
@@ -166,16 +153,6 @@ export default function Navbar({ currentSection }: NavbarProps) {
             title={isMuted ? "Unmute" : "Mute"}
           >
             {isMuted ? <VolumeX className="w-4 h-4 text-pink" /> : <Volume2 className="w-4 h-4" />}
-          </button>
-
-          {/* Theme Switcher */}
-          <button 
-            onClick={toggleTheme}
-            className="text-foreground/60 hover:text-foreground p-1 transition-colors"
-            data-cursor="magnetic"
-            title="Change Theme"
-          >
-            {isThemeDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
           </button>
 
           {/* Mobile Menu button */}

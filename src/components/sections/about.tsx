@@ -151,7 +151,7 @@ export default function About() {
               className="pt-2 flex flex-col items-start gap-2"
             >
               <span className="text-[10px] tracking-[0.3em] text-white/35 uppercase font-semibold">Find Me On</span>
-              <div className="flex flex-nowrap gap-2 overflow-x-auto pb-1">
+              <div className="flex flex-wrap gap-2 md:gap-2.5 max-w-full">
                 {[
                   {
                     name: "Instagram",
