@@ -164,102 +164,160 @@ function Lightbox({ section, onClose }: LightboxProps) {
     exit: (d: number) => ({ x: d > 0 ? "-100%" : "100%", opacity: 0 }),
   };
 
+  // Touch drag swipe handler
+  const handleDragEnd = (_: any, info: { offset: { x: number }; velocity: { x: number } }) => {
+    const swipeThreshold = 50;
+    if (info.offset.x < -swipeThreshold || info.velocity.x < -300) {
+      go(1);
+    } else if (info.offset.x > swipeThreshold || info.velocity.x > 300) {
+      go(-1);
+    }
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-      className="fixed inset-0 z-[99999] bg-black/95 backdrop-blur-xl flex items-center justify-center p-4 md:p-8"
+      className="fixed inset-0 z-[99999] bg-black/95 backdrop-blur-2xl flex items-center justify-center p-2 sm:p-6"
       onClick={onClose}
     >
       <motion.div
-        initial={{ scale: 0.9, y: 30 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.9, y: 30 }}
-        className="w-full max-w-3xl glass-premium rounded-3xl border border-white/10 p-5 relative overflow-hidden flex flex-col"
+        initial={{ scale: 0.9, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.9, y: 20 }}
+        className="w-full max-w-3xl glass-premium rounded-2xl md:rounded-3xl border border-white/10 p-3.5 sm:p-6 relative overflow-y-auto max-h-[94vh] flex flex-col gap-3"
         onClick={e => e.stopPropagation()}
       >
         {/* Accent glow behind */}
         <div className="absolute inset-0 opacity-10 blur-3xl pointer-events-none"
           style={{ background: `radial-gradient(circle at center, ${section.accent} 0%, transparent 80%)` }} />
 
-        {/* Close Button */}
-        <button
-          type="button"
-          onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            onClose();
-          }}
-          className="absolute right-4 top-4 p-2.5 rounded-full bg-black/60 border border-white/20 text-white/80 hover:text-white hover:bg-black/90 transition-all z-50 cursor-pointer"
-          aria-label="Close modal"
-        >
-          <X className="w-5 h-5" />
-        </button>
+        {/* Header Row: Breadcrumb & Close Button */}
+        <div className="relative z-10 flex justify-between items-center pr-10">
+          <div className="flex items-center gap-2">
+            <span className="text-[10px] sm:text-xs tracking-[0.25em] text-white/50 uppercase font-mono truncate max-w-[200px] sm:max-w-none">
+              Safar · {section.title}
+            </span>
+            <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-white/10 text-gold font-bold">
+              {index + 1} / {images.length}
+            </span>
+          </div>
 
-        {/* Section breadcrumb */}
-        <div className="relative z-10 mb-3">
-          <span className="text-[9px] tracking-[0.35em] text-white/30 uppercase font-mono">Safar · {section.title}</span>
-          <span className="text-[9px] text-white/20 font-mono ml-3">{index + 1} / {images.length}</span>
+          <button
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onClose();
+            }}
+            className="absolute right-0 top-0 p-2 sm:p-2.5 rounded-full bg-black/70 border border-white/20 text-white/80 hover:text-white transition-all z-50 cursor-pointer"
+            aria-label="Close modal"
+          >
+            <X className="w-4 h-4 sm:w-5 sm:h-5" />
+          </button>
         </div>
 
-        {/* Image area */}
-        <div className="relative w-full aspect-[4/3] rounded-2xl bg-zinc-950 overflow-hidden border border-white/5">
-          {/* Accent behind image */}
-          <div className="absolute inset-0 opacity-20 blur-3xl pointer-events-none"
-            style={{ background: `radial-gradient(circle at center, ${section.accent} 0%, transparent 80%)` }} />
+        {/* Image Display Area with Touch Drag / Swipe Support */}
+        <div className="relative w-full aspect-[4/3] sm:aspect-[16/10] rounded-xl sm:rounded-2xl bg-zinc-950 overflow-hidden border border-white/10 touch-pan-y flex items-center justify-center">
+          {/* Ambient blur behind current photo */}
+          <div 
+            className="absolute inset-0 opacity-25 blur-2xl pointer-events-none transition-all duration-500"
+            style={{ backgroundImage: `url("${current.src}")`, backgroundSize: "cover", backgroundPosition: "center" }} 
+          />
 
           <AnimatePresence custom={direction} mode="popLayout">
             <motion.img
-              key={index} custom={direction} variants={variants}
-              initial="enter" animate="center" exit="exit"
-              transition={{ duration: 0.4, ease: "easeInOut" }}
-              src={current.src} alt={current.caption}
-              className="absolute inset-0 w-full h-full object-contain"
+              key={index}
+              custom={direction}
+              variants={variants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              src={current.src}
+              alt={current.caption}
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.2}
+              onDragEnd={handleDragEnd}
+              className="absolute inset-0 w-full h-full object-contain cursor-grab active:cursor-grabbing select-none"
             />
           </AnimatePresence>
 
-          {/* Prev / Next */}
-          <button onClick={() => go(-1)}
-            className="absolute left-3 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-black/50 border border-white/10 text-white hover:bg-black/80 transition-all z-10">
+          {/* Swipe Left / Right hint overlay for mobile */}
+          <div className="absolute top-2 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-black/60 border border-white/10 text-[9px] text-white/60 font-mono pointer-events-none md:hidden backdrop-blur-sm">
+            ← Swipe to view photos →
+          </div>
+
+          {/* Prev / Next Buttons */}
+          <button 
+            onClick={() => go(-1)}
+            className="absolute left-2 top-1/2 -translate-y-1/2 p-2 sm:p-3 rounded-full bg-black/60 border border-white/20 text-white hover:bg-black/90 active:scale-95 transition-all z-20 cursor-pointer"
+            aria-label="Previous photo"
+          >
             <ChevronLeft className="w-5 h-5" />
           </button>
-          <button onClick={() => go(1)}
-            className="absolute right-3 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-black/50 border border-white/10 text-white hover:bg-black/80 transition-all z-10">
+
+          <button 
+            onClick={() => go(1)}
+            className="absolute right-2 top-1/2 -translate-y-1/2 p-2 sm:p-3 rounded-full bg-black/60 border border-white/20 text-white hover:bg-black/90 active:scale-95 transition-all z-20 cursor-pointer"
+            aria-label="Next photo"
+          >
             <ChevronRight className="w-5 h-5" />
           </button>
 
-          {/* Progress bar */}
+          {/* Autoplay Progress bar */}
           {playing && (
-            <motion.div key={`bar-${index}`} className="absolute bottom-0 left-0 h-0.5 bg-gold z-10"
-              initial={{ width: "0%" }} animate={{ width: "100%" }}
-              transition={{ duration: INTERVAL / 1000, ease: "linear" }} />
+            <motion.div 
+              key={`bar-${index}`} 
+              className="absolute bottom-0 left-0 h-1 bg-gold z-20"
+              initial={{ width: "0%" }} 
+              animate={{ width: "100%" }}
+              transition={{ duration: INTERVAL / 1000, ease: "linear" }} 
+            />
           )}
         </div>
 
-        {/* Bottom meta */}
-        <div className="relative z-10 pt-4 flex justify-between items-end">
-          <div className="flex flex-col text-left">
-            <span className="text-sm font-bold text-white tracking-widest uppercase">{current.caption}</span>
-            <span className="text-[10px] text-gold font-mono tracking-widest mt-1">{section.title}</span>
+        {/* Bottom Metadata & Controls Row */}
+        <div className="relative z-10 pt-1 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+          <div className="flex flex-col text-left max-w-full">
+            <span className="text-xs sm:text-sm font-bold text-white tracking-wide uppercase line-clamp-1">
+              {current.caption}
+            </span>
+            <span className="text-[10px] text-gold/90 font-mono tracking-wider">
+              {section.title}
+            </span>
           </div>
-          <div className="flex items-center gap-2">
-            <button onClick={() => setPlaying(p => !p)}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/5 text-xs text-white/80 hover:bg-white/10 transition-colors">
+
+          <div className="flex items-center gap-2 shrink-0 self-end sm:self-auto">
+            <button 
+              onClick={() => setPlaying(p => !p)}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 border border-white/10 text-xs font-mono text-white/90 hover:bg-white/20 transition-colors cursor-pointer"
+            >
               {playing ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
               <span>{playing ? "Pause" : "Play"}</span>
             </button>
-            <button onClick={() => setLiked(l => !l)}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/5 text-xs text-white/80 hover:bg-white/10 transition-colors">
-              <Heart className={`w-3.5 h-3.5 ${liked ? "fill-pink-400 text-pink-400" : "text-white/40"}`} />
-              <span>{liked ? "Saved" : "Save Still"}</span>
+
+            <button 
+              onClick={() => setLiked(l => !l)}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 border border-white/10 text-xs font-mono text-white/90 hover:bg-white/20 transition-colors cursor-pointer"
+            >
+              <Heart className={`w-3.5 h-3.5 ${liked ? "fill-pink-400 text-pink-400" : "text-white/60"}`} />
+              <span>{liked ? "Saved" : "Save"}</span>
             </button>
           </div>
         </div>
 
-        {/* Dot indicators */}
-        <div className="flex gap-1.5 mt-3 flex-wrap justify-center">
+        {/* Dot Indicators Bar (Scrollable on small screens) */}
+        <div className="flex gap-1.5 mt-1 overflow-x-auto py-1 px-2 justify-center max-w-full no-scrollbar">
           {images.map((_, i) => (
-            <button key={i}
+            <button 
+              key={i}
               onClick={() => { setDirection(i > index ? 1 : -1); setIndex(i); }}
-              className="rounded-full transition-all duration-300"
-              style={{ width: i === index ? 20 : 6, height: 6, backgroundColor: i === index ? "#D4AF37" : "rgba(255,255,255,0.2)" }}
+              className="rounded-full transition-all duration-300 shrink-0 cursor-pointer"
+              style={{ 
+                width: i === index ? 22 : 7, 
+                height: 7, 
+                backgroundColor: i === index ? "#D4AF37" : "rgba(255,255,255,0.25)" 
+              }}
+              aria-label={`Go to photo ${i + 1}`}
             />
           ))}
         </div>
