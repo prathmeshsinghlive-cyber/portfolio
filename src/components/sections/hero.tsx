@@ -250,16 +250,16 @@ export default function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5 }}
-            className="w-full max-w-[95vw] sm:max-w-[380px] lg:max-w-none glass-premium p-3 md:p-4 rounded-2xl border border-white/10 flex items-center justify-between gap-3 md:gap-4 z-20"
+            className="w-full max-w-[95vw] sm:max-w-[380px] lg:max-w-none glass-premium p-2.5 sm:p-4 rounded-2xl border border-white/10 flex items-center justify-between gap-2 sm:gap-4 z-20 overflow-hidden"
             style={{
               boxShadow: isPlaying 
                 ? `0 20px 40px rgba(0, 0, 0, 0.3), 0 0 15px ${activeTrack.color}15`
                 : "0 20px 40px rgba(0, 0, 0, 0.3)"
             }}
           >
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
               <div 
-                className="w-12 h-12 rounded-lg bg-zinc-800 flex items-center justify-center relative overflow-hidden shrink-0 border border-white/10"
+                className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-zinc-800 flex items-center justify-center relative overflow-hidden shrink-0 border border-white/10"
               >
                 {/* Abstract thumbnail colored by active track */}
                 <div 
@@ -268,27 +268,27 @@ export default function Hero() {
                     background: `linear-gradient(135deg, ${activeTrack.color}80, #000000)`
                   }}
                 />
-                <Music className="w-5 h-5 text-white/70 relative z-10" />
+                <Music className="w-4 h-4 sm:w-5 sm:h-5 text-white/70 relative z-10" />
               </div>
 
-              <div className="flex flex-col select-none text-left">
-                <span className="text-[9px] text-white/40 uppercase tracking-widest">Active Player</span>
-                <span className="text-xs font-bold text-white tracking-wider whitespace-nowrap">
+              <div className="flex flex-col select-none text-left min-w-0">
+                <span className="text-[8px] sm:text-[9px] text-white/40 uppercase tracking-widest hidden sm:block">Active Player</span>
+                <span className="text-xs font-bold text-white tracking-wider truncate max-w-[110px] sm:max-w-none">
                   {activeTrack.title}
                 </span>
-                <span className="text-[10px] text-white/60 whitespace-nowrap">
+                <span className="text-[10px] text-white/60 truncate max-w-[110px] sm:max-w-none">
                   {activeTrack.album}
                 </span>
               </div>
             </div>
 
             {/* Real-time equalizers */}
-            <div className="w-20 h-10 shrink-0">
+            <div className="hidden sm:block w-14 sm:w-20 h-8 sm:h-10 shrink-0">
               <AudioVisualizer type="bars" color={activeTrack.color} barWidth={2} gap={1} multiplier={0.8} />
             </div>
 
-            {/* Control Button panel */}
-            <div className="flex items-center gap-1.5 shrink-0">
+            {/* Control Button panel - Always in frame */}
+            <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
               <button 
                 onClick={prevTrack} 
                 className="p-1.5 rounded-lg text-white/50 hover:text-white hover:bg-white/5 transition-colors"
@@ -300,7 +300,7 @@ export default function Hero() {
               
               <button 
                 onClick={togglePlay} 
-                className="p-2 rounded-full text-black hover:scale-105 active:scale-95 transition-all shadow-md"
+                className="p-2 rounded-full text-black hover:scale-105 active:scale-95 transition-all shadow-md shrink-0"
                 style={{ backgroundColor: activeTrack.color }}
                 title={isPlaying ? "Pause" : "Play"}
                 data-cursor="magnetic"
