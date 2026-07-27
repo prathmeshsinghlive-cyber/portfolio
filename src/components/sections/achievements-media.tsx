@@ -153,17 +153,121 @@ const PRESS_PHOTOS: GoodPhoto[] = [
   },
 ];
 
-export default function AchievementsMedia() {
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+interface PressPhotoModalProps {
+  index: number;
+  onClose: () => void;
+  onPrev: () => void;
+  onNext: () => void;
+}
+
+function PressPhotoModal({ index, onClose, onPrev, onNext }: PressPhotoModalProps) {
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, []);
 
   useEffect(() => {
-    if (selectedIndex !== null) {
-      document.body.style.overflow = "hidden";
-      return () => {
-        document.body.style.overflow = "";
-      };
-    }
-  }, [selectedIndex]);
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "ArrowRight") onNext();
+      if (e.key === "ArrowLeft") onPrev();
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [onNext, onPrev, onClose]);
+
+  if (typeof window === "undefined") return null;
+
+  const photo = PRESS_PHOTOS[index];
+
+  return createPortal(
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-[999999] bg-black/95 backdrop-blur-2xl flex items-center justify-center p-2 sm:p-6"
+      onClick={onClose}
+    >
+      <motion.div
+        initial={{ scale: 0.9, y: 20 }}
+        animate={{ scale: 1, y: 0 }}
+        exit={{ scale: 0.9, y: 20 }}
+        transition={{ type: "spring", stiffness: 280, damping: 28 }}
+        className="w-full max-w-4xl glass-premium rounded-2xl md:rounded-3xl border border-white/10 p-3.5 sm:p-5 relative overflow-y-auto max-h-[94vh] flex flex-col items-center justify-center gap-3"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Close Button */}
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            onClose();
+          }}
+          className="absolute right-4 top-4 p-2.5 rounded-full bg-black/70 border border-white/20 text-white/80 hover:text-white hover:bg-black/90 transition-all z-50 cursor-pointer"
+          aria-label="Close modal"
+        >
+          <X className="w-5 h-5" />
+        </button>
+
+        {/* Main Lightbox Image */}
+        <div className="w-full aspect-[4/3] md:aspect-[16/10] rounded-xl md:rounded-2xl overflow-hidden bg-black border border-white/10 relative flex items-center justify-center">
+          <img
+            src={encodeURI(photo.src)}
+            alt={photo.label}
+            className="w-full h-full object-contain"
+          />
+
+          {/* Navigation Prev/Next */}
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              onPrev();
+            }}
+            className="absolute left-3 top-1/2 -translate-y-1/2 p-2.5 sm:p-3 rounded-full bg-black/60 border border-white/15 text-white hover:bg-black/90 active:scale-95 transition-all z-20 cursor-pointer"
+            aria-label="Previous photo"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              onNext();
+            }}
+            className="absolute right-3 top-1/2 -translate-y-1/2 p-2.5 sm:p-3 rounded-full bg-black/60 border border-white/15 text-white hover:bg-black/90 active:scale-95 transition-all z-20 cursor-pointer"
+            aria-label="Next photo"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* Lightbox Footer Info */}
+        <div className="w-full pt-2 flex justify-between items-center text-left">
+          <div className="flex flex-col">
+            <span className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider">
+              {photo.label}
+            </span>
+            <span className="text-[10px] text-gold font-mono tracking-widest mt-0.5">
+              Press Photo #{String(index + 1).padStart(2, "0")} · Prathmesh Singh
+            </span>
+          </div>
+
+          <span className="text-xs font-mono text-white/50">
+            {index + 1} / {PRESS_PHOTOS.length}
+          </span>
+        </div>
+      </motion.div>
+    </motion.div>,
+    document.body
+  );
+}
+
+export default function AchievementsMedia() {
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
   const goNext = () => {
     if (selectedIndex !== null) {
@@ -212,7 +316,7 @@ export default function AchievementsMedia() {
             >
               {/* Photo Image */}
               <img
-                src={photo.src}
+                src={encodeURI(photo.src)}
                 alt={photo.label}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-85 group-hover:opacity-100"
               />
@@ -258,85 +362,13 @@ export default function AchievementsMedia() {
 
         {/* Lightbox Modal */}
         <AnimatePresence>
-          {selectedIndex !== null && typeof window !== "undefined" && createPortal(
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 z-[999999] bg-black/95 backdrop-blur-2xl flex items-center justify-center p-4 md:p-8"
-              onClick={() => setSelectedIndex(null)}
-            >
-              <motion.div
-                initial={{ scale: 0.9, y: 30 }}
-                animate={{ scale: 1, y: 0 }}
-                exit={{ scale: 0.9, y: 30 }}
-                transition={{ type: "spring", stiffness: 280, damping: 28 }}
-                className="w-full max-w-4xl glass-premium rounded-3xl border border-white/10 p-5 relative overflow-hidden flex flex-col items-center justify-center"
-                onClick={(e) => e.stopPropagation()}
-              >
-                {/* Close Button */}
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setSelectedIndex(null);
-                  }}
-                  className="absolute right-4 top-4 p-2.5 rounded-full bg-black/70 border border-white/20 text-white/80 hover:text-white hover:bg-black/90 transition-all z-50 cursor-pointer"
-                  aria-label="Close modal"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-
-                {/* Main Lightbox Image */}
-                <div className="w-full aspect-[4/3] md:aspect-[16/10] rounded-2xl overflow-hidden bg-black border border-white/10 relative flex items-center justify-center">
-                  <img
-                    src={PRESS_PHOTOS[selectedIndex].src}
-                    alt={PRESS_PHOTOS[selectedIndex].label}
-                    className="w-full h-full object-contain"
-                  />
-
-                  {/* Navigation Prev/Next */}
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      goPrev();
-                    }}
-                    className="absolute left-3 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/60 border border-white/15 text-white hover:bg-black/90 transition-all z-20 cursor-pointer"
-                  >
-                    <ChevronLeft className="w-5 h-5" />
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      goNext();
-                    }}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/60 border border-white/15 text-white hover:bg-black/90 transition-all z-20 cursor-pointer"
-                  >
-                    <ChevronRight className="w-5 h-5" />
-                  </button>
-                </div>
-
-                {/* Lightbox Footer Info */}
-                <div className="w-full pt-4 flex justify-between items-center text-left">
-                  <div className="flex flex-col">
-                    <span className="text-sm font-bold text-white uppercase tracking-wider">
-                      {PRESS_PHOTOS[selectedIndex].label}
-                    </span>
-                    <span className="text-[10px] text-gold font-mono tracking-widest mt-0.5">
-                      Press Photo #{String(selectedIndex + 1).padStart(2, "0")} · Prathmesh Singh
-                    </span>
-                  </div>
-
-                  <span className="text-xs font-mono text-white/40">
-                    {selectedIndex + 1} / {PRESS_PHOTOS.length}
-                  </span>
-                </div>
-              </motion.div>
-            </motion.div>,
-            document.body
+          {selectedIndex !== null && (
+            <PressPhotoModal
+              index={selectedIndex}
+              onClose={() => setSelectedIndex(null)}
+              onPrev={goPrev}
+              onNext={goNext}
+            />
           )}
         </AnimatePresence>
 
