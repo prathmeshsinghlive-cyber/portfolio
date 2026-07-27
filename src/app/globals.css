@@ -76,12 +76,6 @@ body {
   transition: background-color 0.4s ease, color 0.4s ease;
 }
 
-/* Apply content-visibility for lazy paint of off-screen sections */
-section {
-  content-visibility: auto;
-  contain-intrinsic-size: 0 800px;
-}
-
 /* GPU-accelerate any transform-based animations */
 .transform-gpu {
   will-change: transform;

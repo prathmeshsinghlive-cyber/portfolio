@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ExternalLink, Eye } from "lucide-react";
 
@@ -119,12 +120,23 @@ const AppleMusicIcon = () => (
 interface ModalProps { song: Song; onClose: () => void; }
 
 function SongModal({ song, onClose }: ModalProps) {
-  return (
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    document.body.style.touchAction = "none";
+    return () => {
+      document.body.style.overflow = "";
+      document.body.style.touchAction = "";
+    };
+  }, []);
+
+  if (typeof window === "undefined") return null;
+
+  return createPortal(
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-[99999] bg-black/92 backdrop-blur-2xl flex items-end md:items-center justify-center p-0 md:p-8"
+      className="fixed inset-0 z-[999999] bg-black/92 backdrop-blur-2xl flex items-end md:items-center justify-center p-0 md:p-8"
       onClick={onClose}
     >
       <motion.div
@@ -223,7 +235,8 @@ function SongModal({ song, onClose }: ModalProps) {
           </div>
         </div>
       </motion.div>
-    </motion.div>
+    </motion.div>,
+    document.body
   );
 }
 

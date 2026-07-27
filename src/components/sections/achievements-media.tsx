@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight, ZoomIn, Camera, Sparkles } from "lucide-react";
 
@@ -155,6 +156,17 @@ const PRESS_PHOTOS: GoodPhoto[] = [
 export default function AchievementsMedia() {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
+  useEffect(() => {
+    if (selectedIndex !== null) {
+      document.body.style.overflow = "hidden";
+      document.body.style.touchAction = "none";
+      return () => {
+        document.body.style.overflow = "";
+        document.body.style.touchAction = "";
+      };
+    }
+  }, [selectedIndex]);
+
   const goNext = () => {
     if (selectedIndex !== null) {
       setSelectedIndex((selectedIndex + 1) % PRESS_PHOTOS.length);
@@ -248,12 +260,12 @@ export default function AchievementsMedia() {
 
         {/* Lightbox Modal */}
         <AnimatePresence>
-          {selectedIndex !== null && (
+          {selectedIndex !== null && typeof window !== "undefined" && createPortal(
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-[99999] bg-black/95 backdrop-blur-2xl flex items-center justify-center p-4 md:p-8"
+              className="fixed inset-0 z-[999999] bg-black/95 backdrop-blur-2xl flex items-center justify-center p-4 md:p-8"
               onClick={() => setSelectedIndex(null)}
             >
               <motion.div
@@ -325,7 +337,8 @@ export default function AchievementsMedia() {
                   </span>
                 </div>
               </motion.div>
-            </motion.div>
+            </motion.div>,
+            document.body
           )}
         </AnimatePresence>
 

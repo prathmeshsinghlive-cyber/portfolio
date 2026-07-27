@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Camera, X, Heart, ZoomIn, ChevronLeft, ChevronRight, Play, Pause } from "lucide-react";
 
@@ -174,10 +175,22 @@ function Lightbox({ section, onClose }: LightboxProps) {
     }
   };
 
-  return (
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    document.body.style.touchAction = "none";
+    return () => {
+      document.body.style.overflow = "";
+      document.body.style.touchAction = "";
+    };
+  }, []);
+
+  if (typeof window === "undefined") return null;
+
+  return createPortal(
     <motion.div
       initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-      className="fixed inset-0 z-[99999] bg-black/95 backdrop-blur-2xl flex items-center justify-center p-2 sm:p-6"
+      className="fixed inset-0 z-[999999] bg-black/95 backdrop-blur-2xl flex items-center justify-center p-2 sm:p-6"
       onClick={onClose}
     >
       <motion.div
@@ -322,7 +335,8 @@ function Lightbox({ section, onClose }: LightboxProps) {
           ))}
         </div>
       </motion.div>
-    </motion.div>
+    </motion.div>,
+    document.body
   );
 }
 

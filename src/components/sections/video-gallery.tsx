@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Play, X, ExternalLink } from "lucide-react";
 
@@ -73,6 +74,17 @@ const VISUAL_STORIES: VideoStory[] = [
 
 export default function VideoGallery() {
   const [selectedVideo, setSelectedVideo] = useState<VideoStory | null>(null);
+
+  useEffect(() => {
+    if (selectedVideo) {
+      document.body.style.overflow = "hidden";
+      document.body.style.touchAction = "none";
+      return () => {
+        document.body.style.overflow = "";
+        document.body.style.touchAction = "";
+      };
+    }
+  }, [selectedVideo]);
 
   return (
     <section 
@@ -154,12 +166,12 @@ export default function VideoGallery() {
 
         {/* Fullscreen Video Player Lightbox Modal */}
         <AnimatePresence>
-          {selectedVideo && (
+          {selectedVideo && typeof window !== "undefined" && createPortal(
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-[99999] bg-black/95 backdrop-blur-2xl flex items-end md:items-center justify-center p-0 md:p-8"
+              className="fixed inset-0 z-[999999] bg-black/95 backdrop-blur-2xl flex items-end md:items-center justify-center p-0 md:p-8"
               onClick={() => setSelectedVideo(null)}
             >
               <motion.div
@@ -216,7 +228,8 @@ export default function VideoGallery() {
                   </a>
                 </div>
               </motion.div>
-            </motion.div>
+            </motion.div>,
+            document.body
           )}
         </AnimatePresence>
 
