@@ -159,10 +159,8 @@ export default function AchievementsMedia() {
   useEffect(() => {
     if (selectedIndex !== null) {
       document.body.style.overflow = "hidden";
-      document.body.style.touchAction = "none";
       return () => {
         document.body.style.overflow = "";
-        document.body.style.touchAction = "";
       };
     }
   }, [selectedIndex]);

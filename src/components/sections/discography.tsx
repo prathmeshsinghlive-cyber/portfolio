@@ -122,10 +122,8 @@ interface ModalProps { song: Song; onClose: () => void; }
 function SongModal({ song, onClose }: ModalProps) {
   useEffect(() => {
     document.body.style.overflow = "hidden";
-    document.body.style.touchAction = "none";
     return () => {
       document.body.style.overflow = "";
-      document.body.style.touchAction = "";
     };
   }, []);
 
@@ -136,15 +134,15 @@ function SongModal({ song, onClose }: ModalProps) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-[999999] bg-black/92 backdrop-blur-2xl flex items-end md:items-center justify-center p-0 md:p-8"
+      className="fixed inset-0 z-[999999] bg-black/92 backdrop-blur-2xl flex items-center justify-center p-2 sm:p-6"
       onClick={onClose}
     >
       <motion.div
-        initial={{ scale: 0.92, y: 30 }}
+        initial={{ scale: 0.92, y: 20 }}
         animate={{ scale: 1, y: 0 }}
-        exit={{ scale: 0.92, y: 30 }}
+        exit={{ scale: 0.92, y: 20 }}
         transition={{ type: "spring", stiffness: 280, damping: 28 }}
-        className="w-full max-w-5xl glass-premium rounded-t-3xl md:rounded-3xl border border-white/10 p-5 md:p-12 relative overflow-y-auto max-h-[95vh] md:max-h-none"
+        className="w-full max-w-5xl glass-premium rounded-2xl md:rounded-3xl border border-white/10 p-4 md:p-10 relative overflow-y-auto max-h-[94vh]"
         onClick={e => e.stopPropagation()}
       >
         {/* Accent glow */}

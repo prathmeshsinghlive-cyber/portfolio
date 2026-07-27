@@ -72,19 +72,90 @@ const VISUAL_STORIES: VideoStory[] = [
   },
 ];
 
+interface VideoModalProps {
+  video: VideoStory;
+  onClose: () => void;
+}
+
+function VideoModal({ video, onClose }: VideoModalProps) {
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, []);
+
+  if (typeof window === "undefined") return null;
+
+  return createPortal(
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-[999999] bg-black/95 backdrop-blur-2xl flex items-center justify-center p-2 sm:p-6"
+      onClick={onClose}
+    >
+      <motion.div
+        initial={{ scale: 0.9, y: 20 }}
+        animate={{ scale: 1, y: 0 }}
+        exit={{ scale: 0.9, y: 20 }}
+        transition={{ type: "spring", stiffness: 280, damping: 28 }}
+        className="w-full max-w-4xl glass-premium rounded-2xl md:rounded-3xl border border-white/10 p-3.5 sm:p-6 relative overflow-y-auto max-h-[94vh] flex flex-col gap-3.5"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Close Button */}
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            onClose();
+          }}
+          className="absolute right-5 top-5 p-2.5 rounded-full bg-black/70 border border-white/20 text-white/80 hover:text-white hover:bg-black/90 transition-all z-50 cursor-pointer"
+          aria-label="Close video player"
+        >
+          <X className="w-5 h-5" />
+        </button>
+
+        {/* Embedded YouTube Player */}
+        <div className="w-full aspect-video rounded-2xl bg-black overflow-hidden border border-white/10 shadow-2xl relative">
+          <iframe
+            src={`https://www.youtube.com/embed/${video.youtubeId}?autoplay=1&rel=0&playsinline=1`}
+            title={video.title}
+            className="w-full h-full rounded-2xl border-0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+          />
+        </div>
+
+        {/* Video Info below Player */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-left pt-1 border-t border-white/10">
+          <div className="flex flex-col">
+            <h4 className="text-lg md:text-xl font-bold text-white tracking-wide uppercase">
+              {video.title}
+            </h4>
+            <p className="text-xs md:text-sm font-serif-lux italic text-white/80 mt-1 max-w-3xl leading-relaxed">
+              {video.description}
+            </p>
+          </div>
+
+          <a
+            href={video.youtubeUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs font-semibold uppercase tracking-wider transition-colors shrink-0"
+          >
+            <span>Open in YouTube</span>
+            <ExternalLink className="w-3.5 h-3.5" />
+          </a>
+        </div>
+      </motion.div>
+    </motion.div>,
+    document.body
+  );
+}
+
 export default function VideoGallery() {
   const [selectedVideo, setSelectedVideo] = useState<VideoStory | null>(null);
-
-  useEffect(() => {
-    if (selectedVideo) {
-      document.body.style.overflow = "hidden";
-      document.body.style.touchAction = "none";
-      return () => {
-        document.body.style.overflow = "";
-        document.body.style.touchAction = "";
-      };
-    }
-  }, [selectedVideo]);
 
   return (
     <section 
@@ -166,70 +237,8 @@ export default function VideoGallery() {
 
         {/* Fullscreen Video Player Lightbox Modal */}
         <AnimatePresence>
-          {selectedVideo && typeof window !== "undefined" && createPortal(
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 z-[999999] bg-black/95 backdrop-blur-2xl flex items-end md:items-center justify-center p-0 md:p-8"
-              onClick={() => setSelectedVideo(null)}
-            >
-              <motion.div
-                initial={{ scale: 0.9, y: 30 }}
-                animate={{ scale: 1, y: 0 }}
-                exit={{ scale: 0.9, y: 30 }}
-                transition={{ type: "spring", stiffness: 280, damping: 28 }}
-                className="w-full max-w-5xl glass-premium rounded-t-3xl md:rounded-3xl border border-white/10 p-4 md:p-8 relative overflow-hidden flex flex-col gap-4 md:gap-5"
-                onClick={e => e.stopPropagation()}
-              >
-                {/* Close Button */}
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setSelectedVideo(null);
-                  }}
-                  className="absolute right-5 top-5 p-2.5 rounded-full bg-black/70 border border-white/20 text-white/80 hover:text-white hover:bg-black/90 transition-all z-50 cursor-pointer"
-                  aria-label="Close video player"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-
-                {/* Embedded YouTube Player */}
-                <div className="w-full aspect-video rounded-2xl bg-black overflow-hidden border border-white/10 shadow-2xl relative">
-                  <iframe
-                    src={`https://www.youtube.com/embed/${selectedVideo.youtubeId}?autoplay=1&rel=0`}
-                    title={selectedVideo.title}
-                    className="w-full h-full rounded-2xl"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowFullScreen
-                  />
-                </div>
-
-                {/* Video Info below Player */}
-                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-left pt-1 border-t border-white/10">
-                  <div className="flex flex-col">
-                    <h4 className="text-lg md:text-xl font-bold text-white tracking-wide uppercase">
-                      {selectedVideo.title}
-                    </h4>
-                    <p className="text-xs md:text-sm font-serif-lux italic text-white/80 mt-1 max-w-3xl leading-relaxed">
-                      {selectedVideo.description}
-                    </p>
-                  </div>
-
-                  <a
-                    href={selectedVideo.youtubeUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs font-semibold uppercase tracking-wider transition-colors shrink-0"
-                  >
-                    <span>Open in YouTube</span>
-                    <ExternalLink className="w-3.5 h-3.5" />
-                  </a>
-                </div>
-              </motion.div>
-            </motion.div>,
-            document.body
+          {selectedVideo && (
+            <VideoModal video={selectedVideo} onClose={() => setSelectedVideo(null)} />
           )}
         </AnimatePresence>
 

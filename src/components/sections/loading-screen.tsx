@@ -81,8 +81,14 @@ export default function LoadingScreen({ onComplete }: { onComplete: () => void }
       ref={screenRef}
       className="fixed inset-0 w-full h-full bg-[#050505] z-[99999] flex flex-col justify-between p-8 md:p-16 select-none overflow-hidden"
     >
-      {/* Decorative starry layout inside loading */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(138,43,226,0.1),transparent_70%)] pointer-events-none" />
+      {/* Subtle Background Reference Image */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center pointer-events-none opacity-20 filter brightness-75 contrast-110"
+        style={{ backgroundImage: `url("${encodeURI("/Website Background Referene Image.JPG")}")` }}
+      />
+      {/* Dark vignette gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/50 to-black/80 pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(138,43,226,0.15),transparent_70%)] pointer-events-none" />
 
       {/* Top Details */}
       <div className="relative z-10 flex justify-between w-full text-white/40 text-[9px] tracking-[0.2em] font-medium">
