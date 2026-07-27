@@ -2,262 +2,219 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Play, Eye, Clock, X, Film, Activity } from "lucide-react";
+import { Play, X, ExternalLink } from "lucide-react";
 
-interface VideoItem {
+interface VideoStory {
   id: string;
   title: string;
-  category: "Music Videos" | "Live Shows" | "Studio Sessions" | "Behind the Scenes" | "Rehearsals";
-  views: string;
-  duration: string;
+  youtubeId: string;
+  youtubeUrl: string;
+  poster: string;
   description: string;
   accent: string;
 }
 
-const VIDEOS: VideoItem[] = [
+const VISUAL_STORIES: VideoStory[] = [
   {
-    id: "vid-1",
-    title: "Nebula (Official Music Video)",
-    category: "Music Videos",
-    views: "12.4M",
-    duration: "3:45",
-    description: "An award-winning psychedelic voyage into cosmic voids, utilizing 3D generative particles.",
-    accent: "#8A2BE2" // Purple
+    id: "ramz",
+    title: "Ramz",
+    youtubeId: "Zpak8zuajHo",
+    youtubeUrl: "https://youtu.be/Zpak8zuajHo?si=-9RGkMHWV1f60sC0",
+    poster: "/SongsPoster/1. Ramz.png",
+    description: "Ramz — Agar aap kisiko bohot pasand karte ho and bolne me darr lagta hai, to ye gaana bhejke confess kardo mere dost…………",
+    accent: "#8A2BE2",
   },
   {
-    id: "vid-2",
-    title: "Supernova Live in London",
-    category: "Live Shows",
-    views: "5.2M",
-    duration: "5:30",
-    description: "Multi-camera recording at the Royal Arena, featuring a 60-piece orchestra and fog effects.",
-    accent: "#0070f3" // Blue
+    id: "khwabon-me-tujhe",
+    title: "Khwabon Me Tujhe",
+    youtubeId: "skDN3kswb_w",
+    youtubeUrl: "https://youtu.be/skDN3kswb_w?si=CZQQXVA5BBAQWgm4",
+    poster: "/SongsPoster/2. Khwabon Me Tujhe.png",
+    description: "Khwabon Me Tujhe — Kabhi aisa hua hai ki koi insaan apki zindagi me aaya and aapki zindagi achanak se bohot khoobsurat banake ek din hamesha ke liye aapse door chala gaya, to us insaan ke jaane ke baad kaise feel hota hai, ye gaana us baare me hai…",
+    accent: "#D4AF37",
   },
   {
-    id: "vid-3",
-    title: "Midnight Drive - Berlin Studio",
-    category: "Studio Sessions",
-    views: "1.8M",
-    duration: "6:15",
-    description: "A raw look inside the synthesizers and drum machines used to compose the cyber-synthwave basslines.",
-    accent: "#FF69B4" // Pink
+    id: "bas-kar",
+    title: "Bas Kar Ye Teri Baatein",
+    youtubeId: "ecFJ_IodbR8",
+    youtubeUrl: "https://youtu.be/ecFJ_IodbR8?si=25ou1uJVaurrje_u",
+    poster: "/SongsPoster/3. Bas Kar Ye Teri Baatein.png",
+    description: "Bas Kar Ye Teri Baatein — Kabhi pyaar aur sapno ke beech me choice karni padi hai? Sapno ke peeche bhaagne ke liye pyaar ko jaane diya hai kabhi? Agar aisa hua hai and wo insaan tumse door hai kyunki tum apne sapno ke pass ho, to ye sunlo…",
+    accent: "#FF69B4",
   },
   {
-    id: "vid-4",
-    title: "Designing the Tour lasers",
-    category: "Behind the Scenes",
-    views: "920K",
-    duration: "10:42",
-    description: "Interview with spatial design specialists discussing laser projection maps and audio sync.",
-    accent: "#D4AF37" // Gold
+    id: "tera-asar-reprise",
+    title: "Tera Asar Reprise",
+    youtubeId: "teTX-Ml20X8",
+    youtubeUrl: "https://youtu.be/teTX-Ml20X8?si=bFEhzFPJSogPK1wK",
+    poster: "/SongsPoster/4. Tera Asar Reprise.png",
+    description: "Tera Asar Reprise — If you liked Tera Asar, you will love this too, aur agar Tera Asar nhi suna fir to seedhe yhi sunlo, kabhi kisi ko dekhke kuch kuch feel hua hai to ye tumhare liye hai…",
+    accent: "#00CED1",
   },
   {
-    id: "vid-5",
-    title: "Acoustic Horizon Rehearsal",
-    category: "Rehearsals",
-    views: "640K",
-    duration: "4:02",
-    description: "Unplugged vocal session inside Copenhagen's stone cathedral prior to the Grand Tour.",
-    accent: "#FF69B4" // Pink
-  }
+    id: "maa-forever",
+    title: "Maa Forever",
+    youtubeId: "MnpLnSCxZL4",
+    youtubeUrl: "https://youtu.be/MnpLnSCxZL4?si=4hdH0lxgEx4ZbkbU",
+    poster: "/SongsPoster/5. Maa Forever.png",
+    description: "Maa Forever — Apni mummy se bohot pyaar karte ho but batane me awkwardness ho jaati hai, to ye sunado unhe……",
+    accent: "#FFD700",
+  },
+  {
+    id: "tera-asar",
+    title: "Tera Asar",
+    youtubeId: "8TjdyvUdhf8",
+    youtubeUrl: "https://youtu.be/8TjdyvUdhf8?si=2ZQ3PYeV-junKdGk",
+    poster: "/SongsPoster/6. Tera Asar.jpg",
+    description: "Tera Asar — A song for all age groups, whether you like someone, you are dating someone or you have married someone, agar aaj bhi us insaan ko dekhke ya uske baare me sochke butterflies in the stomach wali feeling aati hai, to ye tumhare liye hai……",
+    accent: "#FF4500",
+  },
 ];
 
-const CATEGORIES = ["All", "Music Videos", "Live Shows", "Studio Sessions", "Behind the Scenes", "Rehearsals"];
-
 export default function VideoGallery() {
-  const [activeCategory, setActiveCategory] = useState<string>("All");
-  const [selectedVideo, setSelectedVideo] = useState<VideoItem | null>(null);
-
-  const filteredVideos = activeCategory === "All" 
-    ? VIDEOS 
-    : VIDEOS.filter(v => v.category === activeCategory);
+  const [selectedVideo, setSelectedVideo] = useState<VideoStory | null>(null);
 
   return (
     <section 
       id="gallery" 
-      className="relative min-h-screen py-24 bg-background overflow-hidden px-6 md:px-16 border-t border-white/5"
+      className="relative min-h-screen py-20 md:py-24 bg-background overflow-hidden px-4 md:px-16 border-t border-white/5"
     >
       <div className="w-full max-w-7xl mx-auto relative z-10">
         
         {/* Section Header */}
-        <div className="flex flex-col mb-12 text-left">
-          <span className="text-[10px] tracking-[0.35em] font-bold text-gold uppercase mb-2">VIDEO GALLERY</span>
+        <div className="flex flex-col mb-16 text-left">
+          <span className="text-[10px] tracking-[0.35em] font-bold text-gold uppercase mb-2">VISUAL EXPERIENCE</span>
           <h3 className="text-3xl md:text-5xl font-light font-serif-lux text-foreground italic">
-            Cinematic Screenings
+            Visual Stories behind the songs
           </h3>
+          <p className="mt-3 text-sm text-white/40 font-light max-w-xl">
+            Watch the official videos and discover the feelings behind every track.
+          </p>
         </div>
 
-        {/* Category Filters bar */}
-        <div className="flex flex-wrap gap-2 md:gap-3 mb-12 justify-start select-none">
-          {CATEGORIES.map((cat) => {
-            const isActive = activeCategory === cat;
-            return (
-              <button
-                key={cat}
-                onClick={() => setActiveCategory(cat)}
-                className={`px-4 py-2 rounded-full text-xs tracking-wider transition-all uppercase border cursor-pointer ${
-                  isActive 
-                    ? "bg-foreground text-background border-foreground font-semibold"
-                    : "bg-white/5 border-white/5 text-foreground/60 hover:text-white hover:bg-white/10"
-                }`}
-                data-cursor="magnetic"
-              >
-                {cat}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Grid cards */}
+        {/* Video Grid Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <AnimatePresence mode="popLayout">
-            {filteredVideos.map((vid) => (
-              <motion.div
-                key={vid.id}
-                layout
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.5 }}
-                whileHover={{ y: -6 }}
-                onClick={() => setSelectedVideo(vid)}
-                className="rounded-2xl glass border border-white/10 overflow-hidden cursor-pointer h-80 flex flex-col justify-between p-5 relative group"
-                data-cursor="play"
-              >
-                {/* Visualizer background representation */}
-                <div 
-                  className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity duration-500 pointer-events-none"
-                  style={{
-                    background: `radial-gradient(circle at center, ${vid.accent} 0%, transparent 80%)`
-                  }}
+          {VISUAL_STORIES.map((vid, idx) => (
+            <motion.div
+              key={vid.id}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.5, delay: idx * 0.08 }}
+              whileHover={{ y: -6 }}
+              onClick={() => setSelectedVideo(vid)}
+              className="rounded-2xl glass border border-white/10 overflow-hidden cursor-pointer flex flex-col justify-between relative group shadow-xl bg-zinc-950/80"
+              data-cursor="play"
+            >
+              {/* Thumbnail Container with Play Overlay */}
+              <div className="relative w-full aspect-video overflow-hidden bg-black">
+                <img
+                  src={`https://img.youtube.com/vi/${vid.youtubeId}/hqdefault.jpg`}
+                  alt={vid.title}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-85 group-hover:opacity-100"
                 />
                 
-                {/* Hover scanline film grain grid */}
-                <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[size:100%_4px,6px_100%] opacity-0 group-hover:opacity-40 transition-opacity duration-300 pointer-events-none" />
+                {/* Dark gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent pointer-events-none" />
 
-                {/* Top: Category Tag and play counts */}
-                <div className="relative z-10 flex justify-between items-center">
-                  <span className="px-2.5 py-0.5 rounded text-[8px] bg-white/5 border border-white/5 text-white/50 tracking-widest uppercase font-mono">
-                    {vid.category}
-                  </span>
-                  <div className="flex items-center gap-1 text-[9px] text-white/40 font-mono">
-                    <Eye className="w-3 h-3 text-gold" />
-                    <span>{vid.views}</span>
-                  </div>
-                </div>
-
-                {/* Center: Play Circle symbol */}
-                <div className="relative z-10 my-auto flex justify-center items-center">
+                {/* Center Play Button */}
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                   <motion.div 
-                    whileHover={{ scale: 1.1 }}
-                    className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center bg-[#050505]/60 text-white group-hover:text-black group-hover:border-gold transition-colors relative shadow-lg"
-                    style={{
-                      boxShadow: `0 0 20px ${vid.accent}15`
-                    }}
+                    whileHover={{ scale: 1.15 }}
+                    className="w-13 h-13 md:w-14 md:h-14 rounded-full border border-white/30 flex items-center justify-center bg-black/60 backdrop-blur-md text-white group-hover:border-gold group-hover:text-gold transition-all duration-300 shadow-2xl"
                   >
-                    {/* Pulsing ring inside */}
-                    <div 
-                      className="absolute inset-[-4px] rounded-full border border-current opacity-0 group-hover:opacity-100 group-hover:animate-ping"
-                      style={{ color: vid.accent }}
-                    />
-                    <Play className="w-4.5 h-4.5 fill-current ml-0.5" />
+                    <Play className="w-5 h-5 fill-current ml-0.5" />
                   </motion.div>
                 </div>
+              </div>
 
-                {/* Bottom: Titles and run times */}
-                <div className="relative z-10 text-left space-y-1">
-                  <div className="flex justify-between items-end gap-4">
-                    <span className="text-sm font-bold text-white tracking-wide uppercase truncate">
-                      {vid.title}
-                    </span>
-                    <span className="text-[10px] text-white/50 font-mono flex items-center gap-1 shrink-0">
-                      <Clock className="w-3.5 h-3.5" /> {vid.duration}
-                    </span>
-                  </div>
-                  <p className="text-[11px] text-white/60 leading-relaxed font-light line-clamp-2">
-                    {vid.description}
-                  </p>
+              {/* Description & Details */}
+              <div className="p-5 flex flex-col justify-between flex-grow text-left space-y-2">
+                <div className="flex justify-between items-center">
+                  <span className="text-base font-bold text-white tracking-wide uppercase">
+                    {vid.title}
+                  </span>
+                  <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-white/5 border border-white/10 text-gold/80">
+                    Official Video
+                  </span>
                 </div>
-              </motion.div>
-            ))}
-          </AnimatePresence>
+
+                <p className="text-xs text-white/70 font-serif-lux italic leading-relaxed line-clamp-3">
+                  {vid.description}
+                </p>
+              </div>
+
+              {/* Accent highlight border on hover */}
+              <div 
+                className="absolute inset-0 rounded-2xl pointer-events-none border border-transparent group-hover:border-white/20 transition-colors duration-300"
+              />
+            </motion.div>
+          ))}
         </div>
 
-        {/* 4. CINEMATIC VIDEO LIGHTBOX PLAYBACK MODAL */}
+        {/* Fullscreen Video Player Lightbox Modal */}
         <AnimatePresence>
           {selectedVideo && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-[99999] bg-black/95 backdrop-blur-xl flex items-center justify-center p-4 md:p-8"
+              className="fixed inset-0 z-[99999] bg-black/95 backdrop-blur-2xl flex items-end md:items-center justify-center p-0 md:p-8"
+              onClick={() => setSelectedVideo(null)}
             >
               <motion.div
                 initial={{ scale: 0.9, y: 30 }}
                 animate={{ scale: 1, y: 0 }}
                 exit={{ scale: 0.9, y: 30 }}
-                className="w-full max-w-4xl glass-premium rounded-3xl border border-white/10 p-4 relative aspect-[16/10] overflow-hidden flex flex-col justify-between"
+                transition={{ type: "spring", stiffness: 280, damping: 28 }}
+                className="w-full max-w-5xl glass-premium rounded-t-3xl md:rounded-3xl border border-white/10 p-4 md:p-8 relative overflow-hidden flex flex-col gap-4 md:gap-5"
+                onClick={e => e.stopPropagation()}
               >
                 {/* Close Button */}
                 <button
-                  onClick={() => setSelectedVideo(null)}
-                  className="absolute right-5 top-5 p-2 rounded-full bg-white/5 text-white/70 hover:text-white hover:bg-white/10 transition-colors z-[10]"
-                  data-cursor="magnetic"
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedVideo(null);
+                  }}
+                  className="absolute right-5 top-5 p-2.5 rounded-full bg-black/70 border border-white/20 text-white/80 hover:text-white hover:bg-black/90 transition-all z-50 cursor-pointer"
+                  aria-label="Close video player"
                 >
                   <X className="w-5 h-5" />
                 </button>
 
-                {/* 1. VIDEO SIMULATION SCREEN */}
-                <div className="w-full h-[85%] rounded-2xl bg-zinc-950 flex flex-col items-center justify-center overflow-hidden relative border border-white/5">
-                  
-                  {/* CRT Screen Scanlines / Noise overlays */}
-                  <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.15)_50%)] bg-[size:100%_4px] opacity-30 pointer-events-none z-10" />
-                  
-                  {/* Floating abstract film dots / lasers simulating playback */}
-                  <div 
-                    className="absolute w-32 h-32 rounded-full blur-[80px] opacity-25 pointer-events-none"
-                    style={{
-                      backgroundColor: selectedVideo.accent,
-                      animation: "mesh-movement 8s ease infinite"
-                    }}
+                {/* Embedded YouTube Player */}
+                <div className="w-full aspect-video rounded-2xl bg-black overflow-hidden border border-white/10 shadow-2xl relative">
+                  <iframe
+                    src={`https://www.youtube.com/embed/${selectedVideo.youtubeId}?autoplay=1&rel=0`}
+                    title={selectedVideo.title}
+                    className="w-full h-full rounded-2xl"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
                   />
-                  
-                  {/* Cinematic visualizer representation inside screen */}
-                  <div className="w-48 h-12 opacity-40 z-10">
-                    <Activity className="w-16 h-16 text-white/30 animate-pulse mx-auto" />
-                  </div>
-
-                  <span className="text-[10px] tracking-[0.4em] text-white/30 uppercase mt-4 z-10 flex items-center gap-2">
-                    <Film className="w-4.5 h-4.5 animate-spin" style={{ animationDuration: "6s" }} /> 
-                    STREAMS IN PROGRESS // PRATHMESH_SINGH.DECK
-                  </span>
                 </div>
 
-                {/* 2. PLAYBACK CONTROLLER TIMELINE BAR */}
-                <div className="w-full h-[15%] pt-3 flex flex-col justify-end text-left">
-                  {/* Simulated seeker line */}
-                  <div className="w-full h-1 bg-white/10 rounded-full relative overflow-hidden cursor-pointer mb-3">
-                    <motion.div 
-                      animate={{ width: ["0%", "100%"] }}
-                      transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-                      className="absolute left-0 top-0 h-full"
-                      style={{ backgroundColor: selectedVideo.accent }}
-                    />
+                {/* Video Info below Player */}
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-left pt-1 border-t border-white/10">
+                  <div className="flex flex-col">
+                    <h4 className="text-lg md:text-xl font-bold text-white tracking-wide uppercase">
+                      {selectedVideo.title}
+                    </h4>
+                    <p className="text-xs md:text-sm font-serif-lux italic text-white/80 mt-1 max-w-3xl leading-relaxed">
+                      {selectedVideo.description}
+                    </p>
                   </div>
 
-                  <div className="flex justify-between items-center text-xs text-white/60">
-                    <div className="flex flex-col">
-                      <span className="font-bold text-white uppercase tracking-wider">{selectedVideo.title}</span>
-                      <span className="text-[9px] tracking-wider text-white/40 uppercase mt-0.5">{selectedVideo.category}</span>
-                    </div>
-                    <div className="flex items-center gap-1.5 font-mono text-[10px]">
-                      <span>0:45</span>
-                      <span>/</span>
-                      <span>{selectedVideo.duration}</span>
-                    </div>
-                  </div>
+                  <a
+                    href={selectedVideo.youtubeUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs font-semibold uppercase tracking-wider transition-colors shrink-0"
+                  >
+                    <span>Open in YouTube</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
                 </div>
-
               </motion.div>
             </motion.div>
           )}

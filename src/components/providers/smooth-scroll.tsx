@@ -21,13 +21,8 @@ export default function SmoothScrollProvider({
     const lenisInstance = lenisRef.current?.lenis;
     if (!lenisInstance) return;
 
-    // Connect ScrollTrigger to Lenis scroll events
     lenisInstance.on("scroll", ScrollTrigger.update);
-    
-    // Set ScrollTrigger defaults
-    ScrollTrigger.defaults({
-      markers: false,
-    });
+    ScrollTrigger.defaults({ markers: false });
 
     return () => {
       ScrollTrigger.killAll();
@@ -38,12 +33,13 @@ export default function SmoothScrollProvider({
     <ReactLenis
       ref={lenisRef}
       options={{
-        duration: 1.2,
+        duration: 0.8,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         orientation: "vertical",
         gestureOrientation: "vertical",
         smoothWheel: true,
-        wheelMultiplier: 1,
+        wheelMultiplier: 1.2,
+        touchMultiplier: 2,
       }}
       root
     >

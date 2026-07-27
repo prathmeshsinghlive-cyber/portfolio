@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState, useRef } from "react";
 import { useAudio } from "@/components/providers/audio-context";
@@ -13,9 +13,11 @@ interface NavbarProps {
 const NAV_LINKS = [
   { id: "hero", label: "Home" },
   { id: "about", label: "Story" },
-  { id: "discography", label: "Music" },
+  { id: "photos", label: "Safar" },
+  { id: "discography", label: "Originals" },
   { id: "live", label: "Upcoming" },
   { id: "gallery", label: "Visuals" },
+  { id: "achievements", label: "Press Photo" },
   { id: "contact", label: "Contact" },
 ];
 
@@ -86,54 +88,55 @@ export default function Navbar({ currentSection }: NavbarProps) {
     <>
       <motion.nav
         animate={{ y: isVisible ? 0 : -100 }}
-        transition={{ duration: 0.4, ease: "easeInOut" }}
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 py-4 px-6 md:px-12 flex justify-between items-center ${
+        transition={{ duration: 0.3, ease: "easeInOut" }}
+        className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 py-4 px-4 md:px-10 flex justify-between items-center ${
           isScrolled 
-            ? "glass py-3 shadow-[0_10px_30px_rgba(0,0,0,0.15)]" 
+            ? "bg-background/85 backdrop-blur-xl border-b border-white/10 py-3 shadow-[0_10px_30px_rgba(0,0,0,0.4)]" 
             : "bg-transparent"
         }`}
       >
         {/* Brand Logo */}
         <div 
           onClick={() => handleLinkClick("hero")}
-          className="text-xl md:text-2xl font-light font-serif-lux tracking-[0.2em] text-foreground cursor-pointer flex items-center gap-1.5 select-none"
+          className="text-xl md:text-2xl font-light font-serif-lux tracking-[0.2em] text-foreground cursor-pointer flex items-center gap-1.5 select-none shrink-0"
           data-cursor="magnetic"
         >
           <span>Prathmesh Singh</span>
         </div>
 
-        {/* Desktop Menu links */}
-        <div className="hidden md:flex items-center gap-8">
+        {/* Desktop Menu links (All 8 sections) */}
+        <div className="hidden lg:flex items-center gap-4 xl:gap-7">
           {NAV_LINKS.map((link) => {
             const isActive = currentSection === link.id;
             return (
               <button
                 key={link.id}
                 onClick={() => handleLinkClick(link.id)}
-                className={`text-xs uppercase tracking-widest transition-all relative py-1 cursor-pointer font-medium ${
+                className={`text-[11px] xl:text-xs uppercase tracking-widest transition-colors py-1 cursor-pointer font-medium relative ${
                   isActive ? "text-gold font-bold" : "text-foreground/60 hover:text-foreground"
                 }`}
                 data-cursor="magnetic"
               >
-                {link.label}
-                {isActive && (
-                  <motion.div 
-                    layoutId="activeUnderline" 
-                    className="absolute bottom-0 left-0 right-0 h-[2px] bg-gold rounded-full"
-                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                <span className="relative pb-1">
+                  {link.label}
+                  {/* Smooth lag-free CSS active underline */}
+                  <span
+                    className={`absolute bottom-0 left-0 right-0 h-[2px] bg-gold rounded-full transition-all duration-300 ease-out ${
+                      isActive ? "w-full opacity-100" : "w-0 opacity-0"
+                    }`}
                   />
-                )}
+                </span>
               </button>
             );
           })}
         </div>
 
         {/* Controls & Widget buttons */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3 md:gap-4 shrink-0">
           {/* Mini Real-time Equalizer Widget */}
           <div 
             onClick={togglePlay}
-            className="flex items-end gap-[3px] h-5 cursor-pointer px-2 border-r border-foreground/10 pr-4"
+            className="flex items-end gap-[3px] h-5 cursor-pointer px-2 border-r border-foreground/10 pr-3 md:pr-4"
             title="Toggle Synthesizer Music"
             data-cursor="play"
           >
@@ -178,22 +181,23 @@ export default function Navbar({ currentSection }: NavbarProps) {
           {/* Mobile Menu button */}
           <button 
             onClick={() => setMobileMenuOpen(true)}
-            className="md:hidden text-foreground/80 hover:text-foreground p-1 transition-colors"
+            className="lg:hidden text-foreground/80 hover:text-foreground p-1 transition-colors"
+            aria-label="Open navigation menu"
           >
             <Menu className="w-5 h-5" />
           </button>
         </div>
       </motion.nav>
 
-      {/* 3. MOBILE MENU PANEL */}
+      {/* MOBILE MENU PANEL */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
             initial={{ opacity: 0, x: "100%" }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: "100%" }}
-            transition={{ type: "tween", duration: 0.35, ease: "easeInOut" }}
-            className="fixed inset-0 z-[9999] bg-background w-full h-full flex flex-col p-8 justify-between"
+            transition={{ type: "tween", duration: 0.3, ease: "easeInOut" }}
+            className="fixed inset-0 z-[9999] bg-background w-full h-full flex flex-col p-6 md:p-8 justify-between overflow-y-auto"
           >
             {/* Header */}
             <div className="flex justify-between items-center">
@@ -201,27 +205,33 @@ export default function Navbar({ currentSection }: NavbarProps) {
               <button 
                 onClick={() => setMobileMenuOpen(false)}
                 className="text-foreground p-2"
+                aria-label="Close menu"
               >
                 <X className="w-6 h-6" />
               </button>
             </div>
 
-            {/* Menu Links */}
-            <div className="flex flex-col gap-6 my-auto text-center">
-              {NAV_LINKS.map((link) => (
-                <button
-                  key={link.id}
-                  onClick={() => handleLinkClick(link.id)}
-                  className="text-xl uppercase tracking-widest text-foreground/80 hover:text-gold active:scale-95 transition-all py-1 cursor-pointer font-light"
-                >
-                  {link.label}
-                </button>
-              ))}
+            {/* Menu Links (All 8 sections) */}
+            <div className="flex flex-col gap-4 my-auto text-center py-6">
+              {NAV_LINKS.map((link) => {
+                const isActive = currentSection === link.id;
+                return (
+                  <button
+                    key={link.id}
+                    onClick={() => handleLinkClick(link.id)}
+                    className={`text-lg uppercase tracking-widest active:scale-95 transition-all py-1.5 cursor-pointer font-light ${
+                      isActive ? "text-gold font-bold" : "text-foreground/80 hover:text-gold"
+                    }`}
+                  >
+                    {link.label}
+                  </button>
+                );
+              })}
             </div>
 
             {/* Bottom Credits */}
-            <div className="text-center text-foreground/30 text-[9px] tracking-widest uppercase">
-              LUXURY DIGITAL CONCERT EXPERIENCE
+            <div className="text-center text-foreground/30 text-[9px] tracking-widest uppercase pb-2">
+              PRATHMESH SINGH — INDEPENDENT MUSICIAN
             </div>
           </motion.div>
         )}

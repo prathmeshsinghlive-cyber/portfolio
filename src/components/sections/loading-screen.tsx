@@ -17,8 +17,8 @@ export default function LoadingScreen({ onComplete }: { onComplete: () => void }
 
   // 1. Percentage counter simulation
   useEffect(() => {
-    const duration = 2500; // 2.5 seconds loading time
-    const intervalTime = 30;
+    const duration = 1200; // 1.2s — snappy on Vercel CDN
+    const intervalTime = 20;
     const steps = duration / intervalTime;
     let currentStep = 0;
 
@@ -65,7 +65,7 @@ export default function LoadingScreen({ onComplete }: { onComplete: () => void }
     if (screenRef.current) {
       gsap.to(screenRef.current, {
         yPercent: -100,
-        duration: 1.2,
+        duration: 0.9,
         ease: "power4.inOut",
         onComplete: () => {
           onComplete();
@@ -86,24 +86,29 @@ export default function LoadingScreen({ onComplete }: { onComplete: () => void }
 
       {/* Top Details */}
       <div className="relative z-10 flex justify-between w-full text-white/40 text-[9px] tracking-[0.2em] font-medium">
-        <span>WWW.PRATHMESH.COM</span>
-        <span>LUXURY MUSIC EXPERIENCE ©2026</span>
+        <span>WWW.ARAWALA.COM</span>
+        <span />
       </div>
 
       {/* Center Cinematic Logo & CTA */}
       <div className="relative z-10 my-auto flex flex-col items-center justify-center text-center">
-        <h1 className="text-4xl md:text-7xl font-light font-serif-lux tracking-[0.25em] text-white flex gap-[0.05em] mb-8 justify-center select-none text-mask-reveal">
-          {titleText.split("").map((letter, index) => (
-            <span
-              key={index}
-              ref={(el) => {
-                if (el) titleLettersRef.current[index] = el;
-              }}
-              className="inline-block transform-gpu"
-            >
-              {letter === " " ? "\u00A0" : letter}
-            </span>
-          ))}
+        <h1 className="text-5xl md:text-8xl font-light font-brittany text-white flex gap-[0.4em] mb-8 justify-center select-none text-mask-reveal py-8 leading-normal">
+          <span
+            ref={(el) => {
+              if (el) titleLettersRef.current[0] = el;
+            }}
+            className="inline-block transform-gpu px-2"
+          >
+            Prathmesh
+          </span>
+          <span
+            ref={(el) => {
+              if (el) titleLettersRef.current[1] = el;
+            }}
+            className="inline-block transform-gpu px-2"
+          >
+            Singh
+          </span>
         </h1>
 
         {/* Dynamic transition between loading progress and "Enter" CTA */}
@@ -155,10 +160,7 @@ export default function LoadingScreen({ onComplete }: { onComplete: () => void }
 
       {/* Bottom status details */}
       <div className="relative z-10 flex flex-col md:flex-row justify-between items-center w-full gap-4 text-white/30 text-[9px] tracking-wider uppercase">
-        <div className="flex items-center gap-2">
-          <div className="w-1.5 h-1.5 rounded-full bg-white/20 animate-ping" />
-          <span>Synthesizing Soundscape Engine</span>
-        </div>
+        <div />
         <span className="text-gold/60">BEST EXPERIENCED WITH HEADPHONES</span>
       </div>
     </div>

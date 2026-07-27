@@ -87,7 +87,7 @@ export default function Featured() {
   return (
     <section 
       id="featured" 
-      className="relative min-h-screen py-24 bg-background overflow-hidden px-6 md:px-16 border-t border-white/5"
+      className="relative min-h-screen py-20 md:py-24 bg-background overflow-hidden px-4 md:px-16 border-t border-white/5"
     >
       <div className="w-full max-w-5xl mx-auto relative z-10">
         
@@ -112,7 +112,7 @@ export default function Featured() {
                 key={track.id}
                 onMouseEnter={() => setHoveredIndex(idx)}
                 onMouseLeave={() => setHoveredIndex(null)}
-                className="w-full rounded-2xl glass p-5 md:p-6 border border-white/10 relative transition-all duration-500 overflow-hidden flex flex-col md:flex-row md:items-center justify-between gap-6"
+                className="w-full rounded-2xl glass p-4 md:p-6 border border-white/10 relative transition-all duration-500 overflow-hidden flex flex-col gap-5"
                 style={{
                   boxShadow: isHovered 
                     ? `0 15px 35px ${accentColor}10, inset 0 0 10px ${accentColor}05`
@@ -163,7 +163,7 @@ export default function Featured() {
                 </div>
 
                 {/* Center Waveform Player (Visual Slider) */}
-                <div className="flex-1 max-w-md flex flex-col justify-center">
+                <div className="flex-1 w-full flex flex-col justify-center">
                   <WaveformBars
                     heights={waveformHeights[idx]}
                     progress={isCurrent ? progress : 0}
@@ -178,7 +178,7 @@ export default function Featured() {
                 </div>
 
                 {/* Right Side: Popularity and Actions */}
-                <div className="flex items-center justify-between md:justify-end gap-6 border-t border-white/5 pt-4 md:border-t-0 md:pt-0">
+                <div className="flex items-center justify-between gap-4 border-t border-white/5 pt-4 md:border-t-0 md:pt-0">
                   {/* Popularity indicator */}
                   <div className="flex flex-col text-left md:text-right">
                     <span className="text-[8px] text-white/40 uppercase tracking-widest mb-1 flex items-center gap-1 justify-start md:justify-end">

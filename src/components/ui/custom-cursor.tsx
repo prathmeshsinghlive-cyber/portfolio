@@ -1,12 +1,20 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 
 export default function CustomCursor() {
   const [cursorType, setCursorType] = useState<"default" | "play" | "view" | "drag" | "hover" | "magnetic">("default");
   const [isVisible, setIsVisible] = useState(false);
-  const [magneticElement, setMagneticElement] = useState<HTMLElement | null>(null);
+
+  const cursorTypeRef = useRef(cursorType);
+  const magneticElementRef = useRef<HTMLElement | null>(null);
+  const magneticRectRef = useRef<DOMRect | null>(null);
+
+  // Sync cursorType ref
+  useEffect(() => {
+    cursorTypeRef.current = cursorType;
+  }, [cursorType]);
 
   // Motion values for exact mouse position
   const mouseX = useMotionValue(-100);
@@ -20,11 +28,14 @@ export default function CustomCursor() {
   useEffect(() => {
     // Show cursor on first mouse move
     const handleMouseMove = (e: MouseEvent) => {
-      if (!isVisible) setIsVisible(true);
+      setIsVisible(prev => {
+        if (!prev) return true;
+        return prev;
+      });
 
-      if (magneticElement) {
+      const rect = magneticRectRef.current;
+      if (rect) {
         // Magnetic pull physics
-        const rect = magneticElement.getBoundingClientRect();
         const centerX = rect.left + rect.width / 2;
         const centerY = rect.top + rect.height / 2;
         
@@ -58,33 +69,57 @@ export default function CustomCursor() {
       const interactiveEl = target.closest("[data-cursor]") as HTMLElement | null;
       const isButtonOrLink = target.closest("a, button, input[type='submit'], select, textarea") !== null;
 
+      let newType: "default" | "play" | "view" | "drag" | "hover" | "magnetic" = "default";
+      let newMagneticEl: HTMLElement | null = null;
+
       if (interactiveEl) {
-        const type = interactiveEl.getAttribute("data-cursor") as any;
-        setCursorType(type || "hover");
+        const type = interactiveEl.getAttribute("data-cursor") as "default" | "play" | "view" | "drag" | "hover" | "magnetic" | null;
+        newType = type || "hover";
         
-        if (type === "magnetic") {
-          setMagneticElement(interactiveEl);
+        if (newType === "magnetic") {
+          newMagneticEl = interactiveEl;
         }
       } else if (isButtonOrLink) {
-        setCursorType("hover");
-      } else {
-        setCursorType("default");
-        setMagneticElement(null);
+        newType = "hover";
+      }
+
+      // Only update state if it actually changed
+      if (newType !== cursorTypeRef.current) {
+        setCursorType(newType);
+      }
+
+      // Handle magnetic element reference updates without triggering React state updates
+      if (newMagneticEl !== magneticElementRef.current) {
+        magneticElementRef.current = newMagneticEl;
+        if (newMagneticEl) {
+          magneticRectRef.current = newMagneticEl.getBoundingClientRect();
+        } else {
+          magneticRectRef.current = null;
+        }
       }
     };
 
-    window.addEventListener("mousemove", handleMouseMove);
+    // Recalculate cached bounding rect on scroll
+    const handleScroll = () => {
+      if (magneticElementRef.current) {
+        magneticRectRef.current = magneticElementRef.current.getBoundingClientRect();
+      }
+    };
+
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
     document.addEventListener("mouseleave", handleMouseLeaveWindow);
     document.addEventListener("mouseenter", handleMouseEnterWindow);
-    window.addEventListener("mouseover", handleMouseOver);
+    window.addEventListener("mouseover", handleMouseOver, { passive: true });
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseleave", handleMouseLeaveWindow);
       document.removeEventListener("mouseenter", handleMouseEnterWindow);
       window.removeEventListener("mouseover", handleMouseOver);
+      window.removeEventListener("scroll", handleScroll);
     };
-  }, [isVisible, magneticElement, mouseX, mouseY]);
+  }, [mouseX, mouseY]);
 
   if (typeof window === "undefined" || !isVisible) return null;
 
@@ -112,8 +147,9 @@ export default function CustomCursor() {
           height: cursorType === "default" ? 6 : 0,
           translateX: "-50%",
           translateY: "-50%",
+          willChange: "transform, width, height",
+          transition: "width 0.15s ease, height 0.15s ease",
         }}
-        transition={{ type: "tween", duration: 0.05 }}
       />
 
       {/* 2. Spring Trailing Ring */}
@@ -139,6 +175,8 @@ export default function CustomCursor() {
             : cursorType === "play" || cursorType === "view"
             ? "0 0 20px rgba(212, 175, 55, 0.2)"
             : "none",
+          willChange: "transform, width, height",
+          transition: "width 0.2s cubic-bezier(0.16, 1, 0.3, 1), height 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease",
         }}
       >
         {/* Render text overlay depending on type */}

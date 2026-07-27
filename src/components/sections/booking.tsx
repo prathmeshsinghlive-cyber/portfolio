@@ -95,7 +95,7 @@ export default function Booking() {
   return (
     <section 
       id="booking" 
-      className="relative min-h-screen py-24 bg-background overflow-hidden px-6 md:px-16 border-t border-white/5"
+      className="relative min-h-screen py-20 md:py-24 bg-background overflow-hidden px-4 md:px-16 border-t border-white/5"
     >
       <div className="w-full max-w-5xl mx-auto relative z-10 flex flex-col items-center">
         

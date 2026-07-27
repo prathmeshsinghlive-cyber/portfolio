@@ -1,6 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Outfit:wght@200;300;400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'Brittany Signature';
+  src: url('https://db.onlinewebfonts.com/t/b4d584ed0e53ba94a815f817690faab2.woff2') format('woff2'),
+       url('https://db.onlinewebfonts.com/t/b4d584ed0e53ba94a815f817690faab2.woff') format('woff'),
+       url('https://db.onlinewebfonts.com/t/b4d584ed0e53ba94a815f817690faab2.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --background: #F7F7F7;
   --foreground: #050505;
@@ -52,17 +62,44 @@
   background: var(--purple);
 }
 
+html {
+  /* Prevent scroll-chaining lag on nested containers */
+  overscroll-behavior: none;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
   overflow-x: hidden;
-  transition: background-color 0.5s ease, color 0.5s ease;
+  overscroll-behavior: none;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* Apply content-visibility for lazy paint of off-screen sections */
+section {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 800px;
+}
+
+/* GPU-accelerate any transform-based animations */
+.transform-gpu {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Optimise images */
+img {
+  image-rendering: auto;
 }
 
 /* Custom Premium Utilities */
 .font-serif-lux {
   font-family: var(--font-serif);
+}
+
+.font-brittany {
+  font-family: 'Brittany Signature', cursive;
 }
 
 /* Glassmorphism Styles */
@@ -86,36 +123,23 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* Grain Overlay Effect */
+/* Grain Overlay Effect — minimal, no animation to save GPU compositing */
 .grain-overlay {
   position: fixed;
-  top: -50%;
-  left: -50%;
-  right: -50%;
-  bottom: -50%;
-  width: 200%;
-  height: 200%;
-  background: transparent url('data:image/svg+xml,%3Csvg viewBox="0%200%20200%20200"%20xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter%20id="noiseFilter"%3E%3CfeTurbulence%20type="fractalNoise"%20baseFrequency="0.65"%20numOctaves="3"%20stitchTiles="stitch"/%3E%3C/filter%3E%3Crect%20width="100%25"%20height="100%25"%20filter="url(%23noiseFilter)"%20opacity="0.04"/%3E%3C/svg%3E') repeat;
-  opacity: 0.8;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent url('data:image/svg+xml,%3Csvg viewBox="0%200%20200%20200"%20xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter%20id="noiseFilter"%3E%3CfeTurbulence%20type="fractalNoise"%20baseFrequency="0.65"%20numOctaves="3"%20stitchTiles="stitch"/%3E%3C/filter%3E%3Crect%20width="100%25"%20height="100%25"%20filter="url(%23noiseFilter)"%20opacity="0.025"/%3E%3C/svg%3E') repeat;
+  opacity: 0.5;
   pointer-events: none;
   z-index: 9999;
-  animation: grain-animation 8s steps(10) infinite;
+  /* No animation — significantly reduces GPU compositing overhead */
 }
 
-@keyframes grain-animation {
-  0%, 100% { transform:translate(0, 0); }
-  10% { transform:translate(-5%, -10%); }
-  20% { transform:translate(-15%, 5%); }
-  30% { transform:translate(7%, -25%); }
-  40% { transform:translate(-5%, 25%); }
-  50% { transform:translate(-15%, 10%); }
-  60% { transform:translate(15%, 0%); }
-  70% { transform:translate(0%, 15%); }
-  80% { transform:translate(3%, 35%); }
-  90% { transform:translate(-10%, 10%); }
-}
-
-/* Animated Mesh Gradient Background */
+/* Static Mesh Gradient Background — animation removed for performance */
 .mesh-gradient {
   position: absolute;
   top: 0;
@@ -127,19 +151,11 @@ body {
   z-index: -10;
   background-color: var(--background);
   background-image: 
-    radial-gradient(at 0% 0%, rgba(138, 43, 226, 0.15) 0px, transparent 50%),
-    radial-gradient(at 50% 0%, rgba(212, 175, 55, 0.12) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, rgba(0, 112, 243, 0.15) 0px, transparent 50%),
-    radial-gradient(at 0% 100%, rgba(255, 105, 180, 0.1) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(138, 43, 226, 0.15) 0px, transparent 50%);
-  background-size: 200% 200%;
-  animation: mesh-movement 20s ease infinite;
-}
-
-@keyframes mesh-movement {
-  0% { background-position: 0% 50% }
-  50% { background-position: 100% 50% }
-  100% { background-position: 0% 50% }
+    radial-gradient(at 0% 0%, rgba(138, 43, 226, 0.12) 0px, transparent 50%),
+    radial-gradient(at 50% 0%, rgba(212, 175, 55, 0.08) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(0, 112, 243, 0.10) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(255, 105, 180, 0.07) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(138, 43, 226, 0.10) 0px, transparent 50%);
 }
 
 /* Custom Text Reveal styles */
@@ -156,11 +172,12 @@ body {
   height: 100vh;
   pointer-events: none;
   z-index: 1;
-  background: radial-gradient(circle 350px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(212, 175, 55, 0.05), transparent 80%);
+  will-change: background;
+  background: radial-gradient(circle 300px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(212, 175, 55, 0.04), transparent 80%);
 }
 
 .dark .spotlight {
-  background: radial-gradient(circle 450px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(138, 43, 226, 0.08), transparent 80%);
+  background: radial-gradient(circle 380px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(138, 43, 226, 0.06), transparent 80%);
 }
 
 /* 3D Vinyl Shine Reflection Effect */

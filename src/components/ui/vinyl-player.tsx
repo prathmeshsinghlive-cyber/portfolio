@@ -41,45 +41,41 @@ export default function VinylPlayer({ coverUrl, size = "md" }: VinylPlayerProps)
         transition={{ type: "spring", stiffness: 300, damping: 20 }}
         data-cursor="play"
       >
-        {/* Abstract Artistic Background on Sleeve */}
-        <div 
-          className="absolute inset-0 z-0 opacity-40 blur-md transition-all duration-700"
-          style={{
-            background: `radial-gradient(circle at 30% 20%, ${accentColor} 0%, transparent 60%), radial-gradient(circle at 80% 80%, #000000 0%, transparent 70%)`
-          }}
-        />
+        {/* Album Cover Poster Image with Dark Gradients for Text Readability */}
+        {activeTrack.coverUrl ? (
+          <>
+            <img 
+              src={activeTrack.coverUrl} 
+              alt={activeTrack.album} 
+              className="absolute inset-0 z-0 w-full h-full object-cover transition-all duration-500" 
+            />
+            <div className="absolute inset-0 z-0 bg-gradient-to-t from-black/90 via-black/30 to-black/70 opacity-90" />
+          </>
+        ) : (
+          /* Abstract Artistic Background on Sleeve */
+          <div 
+            className="absolute inset-0 z-0 opacity-40 blur-md transition-all duration-700"
+            style={{
+              background: `radial-gradient(circle at 30% 20%, ${accentColor} 0%, transparent 60%), radial-gradient(circle at 80% 80%, #000000 0%, transparent 70%)`
+            }}
+          />
+        )}
 
         {/* Branding on jacket */}
         <div className="relative z-10 flex justify-between items-start w-full">
-          <span className="text-[9px] tracking-widest text-white/50 uppercase">HQ Stereo</span>
-          <span className="text-[9px] tracking-widest text-white/50 uppercase">LP {currentTrackIndex + 1}</span>
+          <span className="text-[9px] tracking-widest text-white/50 uppercase">Originals</span>
+          <span />
         </div>
 
-        {/* Center Artwork details */}
-        <div className="relative z-10 my-auto flex flex-col items-center justify-center text-center">
-          <motion.div 
-            className="w-10 h-10 rounded-full border border-white/20 mb-2 flex items-center justify-center"
-            style={{ borderColor: `${accentColor}40` }}
-          >
-            <div className="w-4 h-4 rounded-full bg-white/10 animate-pulse" />
-          </motion.div>
-          <span className="font-serif-lux text-lg italic text-white leading-tight font-semibold">
-            {activeTrack.album}
-          </span>
-          <span className="text-[10px] text-white/70 tracking-widest uppercase mt-1">
-            {activeTrack.genre}
-          </span>
-        </div>
+        {/* Spacer to push branding and track title to top/bottom */}
+        <div className="my-auto" />
 
         {/* Track Title banner */}
-        <div className="relative z-10 w-full flex justify-between items-end">
-          <div className="flex flex-col text-left">
-            <span className="text-[8px] text-white/40 uppercase tracking-widest">Selected Track</span>
-            <span className="text-xs font-semibold text-white tracking-wider truncate max-w-[120px]">
-              {activeTrack.title}
-            </span>
-          </div>
-          <div className="text-[9px] text-white/60 font-mono">{activeTrack.duration}</div>
+        <div className="relative z-10 w-full flex justify-between items-end gap-4">
+          <span className="text-xs font-semibold text-white tracking-wider text-left">
+            {activeTrack.title}
+          </span>
+          <div className="text-[9px] text-white/60 font-mono shrink-0">{activeTrack.duration}</div>
         </div>
       </motion.div>
 

@@ -13,7 +13,6 @@ import AchievementsMedia from "@/components/sections/achievements-media";
 import Testimonials from "@/components/sections/testimonials";
 import Contact from "@/components/sections/contact";
 import Footer from "@/components/sections/footer";
-import AIAssistant from "@/components/ui/ai-assistant";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles } from "lucide-react";
 
@@ -35,6 +34,8 @@ export default function Home() {
   // 1. Keyboard Konami Code Trigger Listener
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      if (!e.key || !konamiCode[konamiIndex]) return;
+
       const key = e.key.toLowerCase();
       const targetKey = konamiCode[konamiIndex].toLowerCase();
 
@@ -66,7 +67,7 @@ export default function Home() {
   useEffect(() => {
     if (!loadingComplete) return;
 
-    const sections = ["hero", "about", "discography", "live", "gallery", "contact"];
+    const sections = ["hero", "about", "photos", "discography", "live", "gallery", "achievements", "contact"];
     const observers = sections.map((secId) => {
       const el = document.getElementById(secId);
       if (!el) return null;
@@ -77,7 +78,7 @@ export default function Home() {
             setCurrentSection(secId);
           }
         },
-        { threshold: 0.25, rootMargin: "-10% 0px -40% 0px" }
+        { threshold: 0.15, rootMargin: "-10% 0px -30% 0px" }
       );
 
       observer.observe(el);
@@ -102,7 +103,7 @@ export default function Home() {
 
       {/* 2. Main Site wrapper */}
       {loadingComplete && (
-        <div className="relative min-h-screen bg-background text-foreground transition-all duration-300">
+        <div className="relative min-h-screen bg-background text-foreground">
           
           {/* Noise overlay texture */}
           <div className="grain-overlay" />
@@ -126,8 +127,7 @@ export default function Home() {
           {/* Footer Ending block */}
           <Footer />
 
-          {/* Immersive AI Voice Assistant overlay widget */}
-          <AIAssistant />
+
 
           {/* 3. EASTER EGG: KONAMI CODE CONCERT LASER Sweepers */}
           <AnimatePresence>
