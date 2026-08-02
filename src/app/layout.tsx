@@ -16,7 +16,29 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Prathmesh Singh | Live",
-  description: "Explore the digital concert world of Prathmesh Singh. Procedural ambient synths, 3D vinyl selectors, and award-winning musical storytelling.",
+  description: "Is bhaag daud bhari zindagi me, aao thoda sa sukoon dhundte hain.",
+  openGraph: {
+    title: "Prathmesh Singh | Live",
+    description: "Is bhaag daud bhari zindagi me, aao thoda sa sukoon dhundte hain.",
+    url: "https://www.arawala.com",
+    siteName: "Prathmesh Singh",
+    images: [
+      {
+        url: "/logo.png",
+        width: 1200,
+        height: 630,
+        alt: "Prathmesh Singh Logo",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Prathmesh Singh | Live",
+    description: "Is bhaag daud bhari zindagi me, aao thoda sa sukoon dhundte hain.",
+    images: ["/logo.png"],
+  },
   icons: {
     icon: "/logo.png",
     apple: "/logo.png",

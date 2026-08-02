@@ -189,34 +189,34 @@ function SongModal({ song, onClose }: ModalProps) {
               <span className="text-[10px] text-white/40 tracking-[0.25em] uppercase font-semibold block mb-3">
                 Listen & Watch
               </span>
-              <div className="grid grid-cols-2 gap-2.5">
+              <div className="grid grid-cols-2 gap-2 sm:gap-2.5">
                 <a
                   href={song.spotify} target="_blank" rel="noreferrer"
-                  className="flex items-center gap-2 px-4 py-3 rounded-xl text-sm font-semibold text-black transition-all hover:scale-105 hover:brightness-110"
+                  className="flex items-center justify-center sm:justify-start gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-semibold text-black transition-all hover:scale-105 hover:brightness-110"
                   style={{ backgroundColor: "#1DB954" }}
                 >
-                  <SpotifyIcon /> Spotify
+                  <SpotifyIcon /> <span className="truncate">Spotify</span>
                 </a>
                 <a
                   href={song.youtube} target="_blank" rel="noreferrer"
-                  className="flex items-center gap-2 px-4 py-3 rounded-xl text-sm font-semibold text-white transition-all hover:scale-105 hover:brightness-110"
+                  className="flex items-center justify-center sm:justify-start gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-semibold text-white transition-all hover:scale-105 hover:brightness-110"
                   style={{ backgroundColor: "#FF0000" }}
                 >
-                  <YouTubeIcon /> Song Video
+                  <YouTubeIcon /> <span className="truncate">Music Video</span>
                 </a>
                 <a
                   href={song.ytMusic} target="_blank" rel="noreferrer"
-                  className="flex items-center gap-2 px-4 py-3 rounded-xl text-sm font-semibold text-white transition-all hover:scale-105 hover:brightness-110"
+                  className="flex items-center justify-center sm:justify-start gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-semibold text-white transition-all hover:scale-105 hover:brightness-110"
                   style={{ backgroundColor: "#FF0033" }}
                 >
-                  <YTMusicIcon /> YT Music
+                  <YTMusicIcon /> <span className="truncate">YT Music</span>
                 </a>
                 <a
                   href={song.appleMusic} target="_blank" rel="noreferrer"
-                  className="flex items-center gap-2 px-4 py-3 rounded-xl text-sm font-semibold text-white transition-all hover:scale-105 hover:brightness-110"
+                  className="flex items-center justify-center sm:justify-start gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-semibold text-white transition-all hover:scale-105 hover:brightness-110"
                   style={{ backgroundColor: "#FC3C44" }}
                 >
-                  <AppleMusicIcon /> Apple Music
+                  <AppleMusicIcon /> <span className="truncate">Apple Music</span>
                 </a>
               </div>
             </div>

@@ -51,7 +51,7 @@ export default function LivePerformances() {
           <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-3xl">
             <img 
               src="/Upcoming/IMG_5290.PNG" 
-              alt="Pyari Si Tu Poster" 
+              alt="Pyaari Si Tu Poster" 
               className="absolute inset-0 w-full h-full object-cover object-[75%_center] opacity-60 md:opacity-75 transition-opacity duration-700"
             />
             {/* Balanced dark gradient vignettes to keep text and countdown timer 100% crisp */}
@@ -70,7 +70,7 @@ export default function LivePerformances() {
             <h3 className="text-2xl md:text-5xl font-light font-serif-lux text-white italic leading-tight">
               Prathmesh Singh Originals: <br />
               <span className="text-gold not-italic font-black uppercase tracking-wider text-3xl md:text-5xl block mt-1 drop-shadow-md">
-                Pyari Si Tu
+                Pyaari Si Tu
               </span>
             </h3>
             
@@ -107,7 +107,7 @@ export default function LivePerformances() {
             </div>
 
               {/* Countdown Blocks */}
-              <div className="flex gap-2 md:gap-4 flex-wrap justify-start lg:justify-end">
+              <div className="flex gap-1.5 sm:gap-2 md:gap-4 justify-start lg:justify-end w-full">
                 {[
                   { label: "DAYS", val: countdown.days },
                   { label: "HRS", val: countdown.hours },
@@ -116,7 +116,7 @@ export default function LivePerformances() {
                 ].map((time, i) => (
                   <div 
                     key={i} 
-                    className="w-16 h-20 md:w-20 md:h-24 rounded-2xl bg-black/75 backdrop-blur-md border border-white/20 flex flex-col justify-center items-center relative overflow-hidden shadow-2xl group hover:border-gold/60 transition-colors"
+                    className="flex-1 max-w-[76px] h-18 sm:h-20 md:h-24 rounded-2xl bg-black/75 backdrop-blur-md border border-white/20 flex flex-col justify-center items-center relative overflow-hidden shadow-2xl group hover:border-gold/60 transition-colors"
                   >
                     {/* Glass highlight slice */}
                     <div className="absolute left-0 right-0 top-1/2 h-[1px] bg-white/10 z-10" />

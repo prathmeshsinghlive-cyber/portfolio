@@ -18,6 +18,7 @@ function captionFromFilename(filename: string): string {
 
   const cleaned = noExt
     .replace(/^\d+[\s.\-]+/, "")
+    .replace(/\s+\d{1,2}(?=\s*-|\s*$)/g, "")
     .replace(/_/g, " ")
     .trim();
   return cleaned || "🙂";
