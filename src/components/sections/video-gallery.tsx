@@ -10,9 +10,10 @@ interface VideoStory {
   title: string;
   youtubeId: string;
   youtubeUrl: string;
-  poster: string;
+  poster?: string;
   description: string;
-  accent: string;
+  accent?: string;
+  badge?: string;
 }
 
 const VISUAL_STORIES: VideoStory[] = [
@@ -24,6 +25,7 @@ const VISUAL_STORIES: VideoStory[] = [
     poster: "/SongsPoster/1. Ramz.png",
     description: "Ramz — Agar aap kisiko bohot pasand karte ho and bolne me darr lagta hai, to ye gaana bhejke confess kardo mere dost…………",
     accent: "#8A2BE2",
+    badge: "Official Video",
   },
   {
     id: "khwabon-me-tujhe",
@@ -33,6 +35,7 @@ const VISUAL_STORIES: VideoStory[] = [
     poster: "/SongsPoster/2. Khwabon Me Tujhe.png",
     description: "Khwabon Me Tujhe — Kabhi aisa hua hai ki koi insaan apki zindagi me aaya and aapki zindagi achanak se bohot khoobsurat banake ek din hamesha ke liye aapse door chala gaya, to us insaan ke jaane ke baad kaise feel hota hai, ye gaana us baare me hai…",
     accent: "#D4AF37",
+    badge: "Official Video",
   },
   {
     id: "bas-kar",
@@ -42,6 +45,7 @@ const VISUAL_STORIES: VideoStory[] = [
     poster: "/SongsPoster/3. Bas Kar Ye Teri Baatein.png",
     description: "Bas Kar Ye Teri Baatein — Kabhi pyaar aur sapno ke beech me choice karni padi hai? Sapno ke peeche bhaagne ke liye pyaar ko jaane diya hai kabhi? Agar aisa hua hai and wo insaan tumse door hai kyunki tum apne sapno ke pass ho, to ye sunlo…",
     accent: "#FF69B4",
+    badge: "Official Video",
   },
   {
     id: "tera-asar-reprise",
@@ -51,6 +55,7 @@ const VISUAL_STORIES: VideoStory[] = [
     poster: "/SongsPoster/4. Tera Asar Reprise.png",
     description: "Tera Asar Reprise — If you liked Tera Asar, you will love this too, aur agar Tera Asar nhi suna fir to seedhe yhi sunlo, kabhi kisi ko dekhke kuch kuch feel hua hai to ye tumhare liye hai…",
     accent: "#00CED1",
+    badge: "Official Video",
   },
   {
     id: "maa-forever",
@@ -60,6 +65,7 @@ const VISUAL_STORIES: VideoStory[] = [
     poster: "/SongsPoster/5. Maa Forever.png",
     description: "Maa Forever — Apni mummy se bohot pyaar karte ho but batane me awkwardness ho jaati hai, to ye sunado unhe……",
     accent: "#FFD700",
+    badge: "Official Video",
   },
   {
     id: "tera-asar",
@@ -69,6 +75,130 @@ const VISUAL_STORIES: VideoStory[] = [
     poster: "/SongsPoster/6. Tera Asar.jpg",
     description: "Tera Asar — A song for all age groups, whether you like someone, you are dating someone or you have married someone, agar aaj bhi us insaan ko dekhke ya uske baare me sochke butterflies in the stomach wali feeling aati hai, to ye tumhare liye hai……",
     accent: "#FF4500",
+    badge: "Official Video",
+  },
+];
+
+const LIVE_PERFORMANCES: VideoStory[] = [
+  {
+    id: "live-1",
+    title: "Live Performance #1",
+    youtubeId: "jgXwrwRxzF0",
+    youtubeUrl: "https://youtu.be/jgXwrwRxzF0?si=t341yCmc7T4yLChI",
+    description: "Watch live stage performance and acoustic session.",
+    badge: "Live Performance",
+  },
+  {
+    id: "live-2",
+    title: "Live Performance #2",
+    youtubeId: "QEuDYz7SLyw",
+    youtubeUrl: "https://youtu.be/QEuDYz7SLyw?si=ve3dDKdMc7-aeell",
+    description: "Watch live stage performance and acoustic session.",
+    badge: "Live Performance",
+  },
+  {
+    id: "live-3",
+    title: "Live Performance #3",
+    youtubeId: "QrFDx4KoB-0",
+    youtubeUrl: "https://youtu.be/QrFDx4KoB-0?si=vHNqYNg4f10HsK8k",
+    description: "Watch live stage performance and acoustic session.",
+    badge: "Live Performance",
+  },
+  {
+    id: "live-4",
+    title: "Live Performance #4",
+    youtubeId: "kA7XQl5terA",
+    youtubeUrl: "https://youtu.be/kA7XQl5terA?si=zpFioWuwxwt9fnLu",
+    description: "Watch live stage performance and acoustic session.",
+    badge: "Live Performance",
+  },
+  {
+    id: "live-5",
+    title: "Live Performance #5",
+    youtubeId: "ObF5iThGw-A",
+    youtubeUrl: "https://youtu.be/ObF5iThGw-A?si=qwo8s8m32YOrs7_B",
+    description: "Watch live stage performance and acoustic session.",
+    badge: "Live Performance",
+  },
+  {
+    id: "live-6",
+    title: "Live Performance #6",
+    youtubeId: "nbLF0lyws7c",
+    youtubeUrl: "https://youtu.be/nbLF0lyws7c?si=H5lY7dzLiAkny-f9",
+    description: "Watch live stage performance and acoustic session.",
+    badge: "Live Performance",
+  },
+  {
+    id: "live-7",
+    title: "Live Performance #7",
+    youtubeId: "Q8UazZTDaLA",
+    youtubeUrl: "https://youtu.be/Q8UazZTDaLA?si=ggQGgGZG7NARrpDF",
+    description: "Watch live stage performance and acoustic session.",
+    badge: "Live Performance",
+  },
+  {
+    id: "live-8",
+    title: "Live Performance #8",
+    youtubeId: "nicWU3Er29U",
+    youtubeUrl: "https://youtu.be/nicWU3Er29U?si=O9JePBE_lixE7iNX",
+    description: "Watch live stage performance and acoustic session.",
+    badge: "Live Performance",
+  },
+  {
+    id: "live-9",
+    title: "Live Performance #9",
+    youtubeId: "d1jhMtnpWrY",
+    youtubeUrl: "https://youtu.be/d1jhMtnpWrY?si=v7c5_lO0OJB_F6mV",
+    description: "Watch live stage performance and acoustic session.",
+    badge: "Live Performance",
+  },
+  {
+    id: "live-10",
+    title: "Live Performance #10",
+    youtubeId: "DagF2sgnkNc",
+    youtubeUrl: "https://youtu.be/DagF2sgnkNc?si=mP-wcuLaQTTMsZs4",
+    description: "Watch live stage performance and acoustic session.",
+    badge: "Live Performance",
+  },
+  {
+    id: "live-11",
+    title: "Live Performance #11",
+    youtubeId: "_fmF54CiLnA",
+    youtubeUrl: "https://youtu.be/_fmF54CiLnA?si=9UURnP9k9qJvNq9H",
+    description: "Watch live stage performance and acoustic session.",
+    badge: "Live Performance",
+  },
+  {
+    id: "live-12",
+    title: "Live Performance #12",
+    youtubeId: "CcLPIN8sL8w",
+    youtubeUrl: "https://youtu.be/CcLPIN8sL8w?si=2538QBmR0mjxM9yL",
+    description: "Watch live stage performance and acoustic session.",
+    badge: "Live Performance",
+  },
+  {
+    id: "live-13",
+    title: "Live Performance #13",
+    youtubeId: "ZA67L-9DJtg",
+    youtubeUrl: "https://youtu.be/ZA67L-9DJtg?si=wso7QEBk3XCUfj7b",
+    description: "Watch live stage performance and acoustic session.",
+    badge: "Live Performance",
+  },
+  {
+    id: "live-14",
+    title: "Live Performance #14",
+    youtubeId: "aDWHYvUwSmg",
+    youtubeUrl: "https://youtu.be/aDWHYvUwSmg?si=6fMcTIwFt-BOr-u0",
+    description: "Watch live stage performance and acoustic session.",
+    badge: "Live Performance",
+  },
+  {
+    id: "live-15",
+    title: "Live Performance #15",
+    youtubeId: "1r8pQBEGxwI",
+    youtubeUrl: "https://youtu.be/1r8pQBEGxwI?si=PHeyDW1kgOOI-1xh",
+    description: "Watch live stage performance and acoustic session.",
+    badge: "Live Performance",
   },
 ];
 
@@ -156,6 +286,9 @@ function VideoModal({ video, onClose }: VideoModalProps) {
 
 export default function VideoGallery() {
   const [selectedVideo, setSelectedVideo] = useState<VideoStory | null>(null);
+  const [activeTab, setActiveTab] = useState<"music-videos" | "live-performances">("music-videos");
+
+  const currentVideos = activeTab === "music-videos" ? VISUAL_STORIES : LIVE_PERFORMANCES;
 
   return (
     <section 
@@ -165,7 +298,7 @@ export default function VideoGallery() {
       <div className="w-full max-w-7xl mx-auto relative z-10">
         
         {/* Section Header */}
-        <div className="flex flex-col mb-16 text-left">
+        <div className="flex flex-col mb-12 text-left">
           <span className="text-[10px] tracking-[0.35em] font-bold text-gold uppercase mb-2">VISUAL EXPERIENCE</span>
           <h3 className="text-3xl md:text-5xl font-light font-serif-lux text-foreground italic">
             Visual Stories behind the songs
@@ -173,17 +306,49 @@ export default function VideoGallery() {
           <p className="mt-3 text-sm text-white/40 font-light max-w-xl">
             Watch the official videos and discover the feelings behind every track.
           </p>
+
+          {/* Small Tab Buttons */}
+          <div className="mt-6 flex flex-wrap items-center gap-2.5">
+            <button
+              type="button"
+              onClick={() => setActiveTab("music-videos")}
+              className={`px-3.5 py-1.5 rounded-full text-[11px] font-semibold tracking-wider uppercase transition-all duration-300 cursor-pointer ${
+                activeTab === "music-videos"
+                  ? "bg-gold text-black shadow-lg shadow-gold/20 font-bold scale-105"
+                  : "bg-white/5 border border-white/10 text-white/70 hover:text-white hover:bg-white/10"
+              }`}
+            >
+              Music Videos ({VISUAL_STORIES.length})
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveTab("live-performances")}
+              className={`px-3.5 py-1.5 rounded-full text-[11px] font-semibold tracking-wider uppercase transition-all duration-300 cursor-pointer ${
+                activeTab === "live-performances"
+                  ? "bg-gold text-black shadow-lg shadow-gold/20 font-bold scale-105"
+                  : "bg-white/5 border border-white/10 text-white/70 hover:text-white hover:bg-white/10"
+              }`}
+            >
+              Live Performances ({LIVE_PERFORMANCES.length})
+            </button>
+          </div>
         </div>
 
         {/* Video Grid Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {VISUAL_STORIES.map((vid, idx) => (
+        <motion.div 
+          key={activeTab}
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
+          {currentVideos.map((vid, idx) => (
             <motion.div
               key={vid.id}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: idx * 0.08 }}
+              transition={{ duration: 0.5, delay: idx * 0.05 }}
               whileHover={{ y: -6 }}
               onClick={() => setSelectedVideo(vid)}
               className="rounded-2xl glass border border-white/10 overflow-hidden cursor-pointer flex flex-col justify-between relative group shadow-xl bg-zinc-950/80"
@@ -192,7 +357,7 @@ export default function VideoGallery() {
               {/* Thumbnail Container with Play Overlay */}
               <div className="relative w-full aspect-video overflow-hidden bg-black">
                 <img
-                  src={`https://img.youtube.com/vi/${vid.youtubeId}/hqdefault.jpg`}
+                  src={vid.poster || `https://img.youtube.com/vi/${vid.youtubeId}/hqdefault.jpg`}
                   alt={vid.title}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-85 group-hover:opacity-100"
                 />
@@ -218,7 +383,7 @@ export default function VideoGallery() {
                     {vid.title}
                   </span>
                   <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-white/5 border border-white/10 text-gold/80">
-                    Official Video
+                    {vid.badge || "Video"}
                   </span>
                 </div>
 
@@ -233,7 +398,7 @@ export default function VideoGallery() {
               />
             </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {/* Fullscreen Video Player Lightbox Modal */}
         <AnimatePresence>
@@ -246,3 +411,4 @@ export default function VideoGallery() {
     </section>
   );
 }
+
